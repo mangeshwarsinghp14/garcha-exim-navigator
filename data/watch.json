@@ -1,0 +1,247 @@
+{
+ "tags": [
+  {
+   "tag": "RoDTEP",
+   "k": [
+    "rodtep"
+   ],
+   "important": true
+  },
+  {
+   "tag": "FEMA / payments",
+   "k": [
+    "export and import of goods and services",
+    "foreign exchange management",
+    "realisation",
+    "realization",
+    "edpms",
+    "idpms",
+    "export proceeds"
+   ],
+   "important": true
+  },
+  {
+   "tag": "Export policy",
+   "k": [
+    "export policy",
+    "schedule-ii",
+    "schedule 2",
+    "minimum export price",
+    "export duty",
+    "prohibited",
+    "restricted"
+   ],
+   "important": true
+  },
+  {
+   "tag": "Import policy",
+   "k": [
+    "import policy",
+    "schedule-i",
+    "schedule 1",
+    "import of"
+   ],
+   "important": true
+  },
+  {
+   "tag": "FTP / Handbook",
+   "k": [
+    "foreign trade policy",
+    "handbook of procedures",
+    "appendix",
+    "ftp 2023",
+    "hbp"
+   ],
+   "important": false
+  },
+  {
+   "tag": "FTA / Origin",
+   "k": [
+    "certificate of origin",
+    "coo",
+    "cepa",
+    "ceta",
+    "tepa",
+    "ecta",
+    "free trade agreement",
+    "trq",
+    "rules of origin"
+   ],
+   "important": true
+  },
+  {
+   "tag": "IEC",
+   "k": [
+    "iec",
+    "importer exporter code",
+    "importer-exporter code"
+   ],
+   "important": true
+  },
+  {
+   "tag": "Duty / Drawback",
+   "k": [
+    "drawback",
+    "customs duty",
+    "duty"
+   ],
+   "important": false
+  },
+  {
+   "tag": "AA / EPCG",
+   "k": [
+    "advance authorisation",
+    "advance authorization",
+    "epcg",
+    "export obligation"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Export Promotion Mission",
+   "k": [
+    "export promotion mission",
+    "niryat",
+    "interest subvention",
+    "market access",
+    "trace"
+   ],
+   "important": true
+  },
+  {
+   "tag": "Finance / ECGC",
+   "k": [
+    "ecgc",
+    "export credit",
+    "pre-shipment",
+    "post-shipment",
+    "credit guarantee",
+    "factoring"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Agri & food",
+   "k": [
+    "rice",
+    "basmati",
+    "wheat",
+    "sugar",
+    "onion",
+    "pulses",
+    "halal",
+    "meat",
+    "agricultural",
+    "apeda"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Status holder",
+   "k": [
+    "status holder"
+   ],
+   "important": false
+  },
+  {
+   "tag": "SCOMET",
+   "k": [
+    "scomet"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Courier / e-commerce",
+   "k": [
+    "courier",
+    "e-commerce",
+    "ecommerce",
+    "dak ghar"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Gold & silver",
+   "k": [
+    "gold",
+    "silver"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Metals & scrap",
+   "k": [
+    "steel",
+    "aluminium",
+    "scrap",
+    "black mass"
+   ],
+   "important": false
+  },
+  {
+   "tag": "Rupee trade",
+   "k": [
+    "rupee",
+    "inr",
+    "vostro"
+   ],
+   "important": false
+  }
+ ],
+ "rules": [
+  {
+   "rule": "realisation",
+   "k": [
+    "export and import of goods and services",
+    "realisation",
+    "realization",
+    "export proceeds"
+   ]
+  },
+  {
+   "rule": "rodtep",
+   "k": [
+    "rodtep"
+   ]
+  },
+  {
+   "rule": "ftas",
+   "k": [
+    "cepa",
+    "ceta",
+    "tepa",
+    "ecta",
+    "free trade agreement",
+    "comprehensive economic"
+   ]
+  },
+  {
+   "rule": "iec",
+   "k": [
+    "iec",
+    "importer exporter code"
+   ]
+  },
+  {
+   "rule": "rice",
+   "k": [
+    "hsn 1006",
+    "rice",
+    "basmati"
+   ]
+  },
+  {
+   "rule": "courier",
+   "k": [
+    "courier"
+   ]
+  },
+  {
+   "rule": "epm",
+   "k": [
+    "export promotion mission",
+    "niryat"
+   ]
+  }
+ ]
+}

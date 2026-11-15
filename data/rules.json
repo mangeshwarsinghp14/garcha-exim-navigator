@@ -1,0 +1,122 @@
+{
+ "asOf": "2026-11-15",
+ "confirmedNote": "Rules sheet checked against DGFT, RBI and CBIC up to this date. Edit this file on GitHub when a ruling changes — the app updates for everyone.",
+ "realiseMonths": 9,
+ "realiseMonthsINR": 12,
+ "rodtepEnd": "2026-12-31",
+ "keyRules": [
+  "Export proceeds must be realised within 9 months of shipment (12 months if invoiced/settled in INR) — FEMA (Export & Import of Goods and Services) Regulations 2026, in force from 1 Oct 2026.",
+  "FEMA Second Amendment (notified 2 Nov 2026, effective 1 Oct 2026): service exporters are deemed to have filed the EDF when they give the bank payment details — resident individuals (any value), others up to ₹10 lakh per remittance.",
+  "RoDTEP continues up to 31 Dec 2026 at unchanged rates.",
+  "FTAs in force: UK CETA (15 Jul 2026), Oman CEPA (1 Jun 2026), India–New Zealand FTA (20 Oct 2026, 100% of Indian exports duty-free). EU FTA concluded, not yet in force.",
+  "INR-invoiced exports get full FTP benefits (FTP amendment, 20 Aug 2026).",
+  "Rice (HSN 1006) export policy condition amended by DGFT Notification 47 dated 9 Nov 2026 — check before contracting."
+ ],
+ "ruleNames": {
+  "realisation": "Export payment deadline (FEMA)",
+  "rodtep": "RoDTEP validity/rates",
+  "ftas": "Trade agreements & Certificates of Origin",
+  "iec": "IEC rules",
+  "rice": "Rice export policy",
+  "courier": "Courier export limits",
+  "epm": "Export Promotion Mission schemes"
+ },
+ "ftas": [
+  [
+   "UAE",
+   "CEPA",
+   "In force 1 May 2022",
+   "~90%+ lines duty-free; Gulf gateway"
+  ],
+  [
+   "Australia",
+   "ECTA",
+   "In force 29 Dec 2022",
+   "100% of Indian exports duty-free from 1 Jan 2026; CECA upgrade under talks"
+  ],
+  [
+   "EFTA (Switzerland, Norway, Iceland, Liechtenstein)",
+   "TEPA",
+   "In force 1 Oct 2025",
+   "92.2% lines; US$100bn investment commitment"
+  ],
+  [
+   "Oman",
+   "CEPA",
+   "In force 1 Jun 2026",
+   "98.08% of Oman's lines duty-free (99.38% of India's exports by value)"
+  ],
+  [
+   "United Kingdom",
+   "CETA",
+   "In force 15 Jul 2026",
+   "Duty-free on ~99% of India's exports by value"
+  ],
+  [
+   "European Union",
+   "FTA",
+   "Concluded 27 Jan 2026 – ratification pending",
+   "97% of EU lines once in force"
+  ],
+  [
+   "New Zealand",
+   "FTA",
+   "In force 20 Oct 2026",
+   "100% of Indian exports duty-free; preferential CoO filed electronically (DGFT Trade Notice 34/2026-27)"
+  ],
+  [
+   "ASEAN",
+   "AITIGA",
+   "In force (review ongoing)",
+   "Check rules of origin carefully"
+  ],
+  [
+   "Japan",
+   "CEPA",
+   "In force 2011",
+   ""
+  ],
+  [
+   "South Korea",
+   "CEPA",
+   "In force 2010",
+   "Upgrade talks"
+  ],
+  [
+   "Singapore",
+   "CECA",
+   "In force 2005",
+   ""
+  ],
+  [
+   "Malaysia",
+   "CECA",
+   "In force 2011",
+   ""
+  ],
+  [
+   "Mauritius",
+   "CECPA",
+   "In force 2021",
+   ""
+  ],
+  [
+   "SAARC",
+   "SAFTA",
+   "In force",
+   ""
+  ],
+  [
+   "Chile / Mercosur / APTA",
+   "PTA",
+   "In force",
+   "Limited lines"
+  ],
+  [
+   "USA",
+   "Interim trade framework (Feb 2026)",
+   "Not an FTA",
+   "US reciprocal tariff on most Indian goods cut to 18% (Feb 2026); Nov 2026 reports of a permanent 10% rate on ~70% of exports — verify the current rate for your HS code before quoting"
+  ]
+ ]
+}

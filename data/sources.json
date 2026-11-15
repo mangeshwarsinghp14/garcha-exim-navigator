@@ -1,0 +1,97 @@
+[
+ {
+  "id": "dgft_notif",
+  "name": "DGFT Notifications",
+  "kind": "Notification",
+  "type": "dgft_table",
+  "url": "https://www.dgft.gov.in/CP/?opt=notification",
+  "official": true,
+  "alwaysImportant": true,
+  "max": 60
+ },
+ {
+  "id": "dgft_pn",
+  "name": "DGFT Public Notices",
+  "kind": "Public Notice",
+  "type": "dgft_table",
+  "url": "https://www.dgft.gov.in/CP/?opt=public-notice",
+  "official": true,
+  "max": 60
+ },
+ {
+  "id": "dgft_tn",
+  "name": "DGFT Trade Notices",
+  "kind": "Trade Notice",
+  "type": "dgft_table",
+  "url": "https://www.dgft.gov.in/CP/?opt=trade-notice",
+  "official": true,
+  "max": 60
+ },
+ {
+  "id": "dgft_circ",
+  "name": "DGFT Circulars",
+  "kind": "Circular",
+  "type": "dgft_table",
+  "url": "https://www.dgft.gov.in/CP/?opt=circular",
+  "official": true,
+  "max": 30
+ },
+ {
+  "id": "rbi_notif",
+  "name": "RBI Notifications (trade & forex)",
+  "kind": "RBI Notification",
+  "type": "rss",
+  "url": "https://www.rbi.org.in/notifications_rss.xml",
+  "official": true,
+  "filter": [
+   "export",
+   "import",
+   "foreign exchange management",
+   "fema",
+   "edpms",
+   "idpms",
+   "trade",
+   "rupee",
+   "vostro",
+   "merchanting",
+   "a.p. (dir",
+   "ecgc",
+   "pre-shipment",
+   "post-shipment",
+   "interest subvention",
+   "invoicing",
+   "inward remittance",
+   "outward remittance"
+  ],
+  "max": 40
+ },
+ {
+  "id": "rbi_press",
+  "name": "RBI Press Releases (trade & forex)",
+  "kind": "RBI Press Release",
+  "type": "rss",
+  "url": "https://www.rbi.org.in/pressreleases_rss.xml",
+  "official": true,
+  "filter": [
+   "export",
+   "import",
+   "foreign exchange management",
+   "fema",
+   "edpms",
+   "idpms",
+   "trade",
+   "rupee",
+   "vostro",
+   "merchanting",
+   "a.p. (dir",
+   "ecgc",
+   "pre-shipment",
+   "post-shipment",
+   "interest subvention",
+   "invoicing",
+   "inward remittance",
+   "outward remittance"
+  ],
+  "max": 30
+ }
+]

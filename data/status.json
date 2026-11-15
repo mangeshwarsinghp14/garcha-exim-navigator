@@ -1,0 +1,62 @@
+{
+ "runAt": "2026-11-15T14:47:34.013Z",
+ "sources": [
+  {
+   "id": "dgft_notif",
+   "name": "DGFT Notifications",
+   "url": "https://www.dgft.gov.in/CP/?opt=notification",
+   "ok": true,
+   "count": 233,
+   "kept": 60,
+   "error": ""
+  },
+  {
+   "id": "dgft_pn",
+   "name": "DGFT Public Notices",
+   "url": "https://www.dgft.gov.in/CP/?opt=public-notice",
+   "ok": true,
+   "count": 175,
+   "kept": 60,
+   "error": ""
+  },
+  {
+   "id": "dgft_tn",
+   "name": "DGFT Trade Notices",
+   "url": "https://www.dgft.gov.in/CP/?opt=trade-notice",
+   "ok": true,
+   "count": 110,
+   "kept": 60,
+   "error": ""
+  },
+  {
+   "id": "dgft_circ",
+   "name": "DGFT Circulars",
+   "url": "https://www.dgft.gov.in/CP/?opt=circular",
+   "ok": true,
+   "count": 29,
+   "kept": 29,
+   "error": ""
+  },
+  {
+   "id": "rbi_notif",
+   "name": "RBI Notifications (trade & forex)",
+   "url": "https://www.rbi.org.in/notifications_rss.xml",
+   "ok": true,
+   "count": 10,
+   "kept": 2,
+   "error": ""
+  },
+  {
+   "id": "rbi_press",
+   "name": "RBI Press Releases (trade & forex)",
+   "url": "https://www.rbi.org.in/pressreleases_rss.xml",
+   "ok": true,
+   "count": 10,
+   "kept": 0,
+   "error": ""
+  }
+ ],
+ "ok": 6,
+ "total": 6,
+ "added": 211
+}
