@@ -7,7 +7,7 @@ India export–import guide app — **no AI needed**, works offline, and **colle
 - **Install on phone (Android):** open the link in Chrome → ⋮ → **Install app** / **Add to Home screen**. Works offline after the first open; your data stays on your device (move it with *Backup & Export*).
 
 ## What's inside
-**v6:** 🤝 Buyer Leads & Tenders (World Bank-funded tenders, EU TED supply tenders, news of foreign brands sourcing from India — unread items tagged *New*, with dates & deadline countdown) · 📈 Top Exports from India (30 groups, FY 2015-16 → FY 2025-26, where to source, who buys, price-check links) · 📍 Source by State / City (185 districts & clusters) · 📦 What to Import & From Where (26 import groups, supplier countries, official foreign trade-promotion bodies).
+**v6:** 🤝 Buyer Leads & Tenders (World Bank-funded tenders, EU TED supply tenders, news of foreign brands sourcing from India — unread items tagged *New*, with dates & deadline countdown) · 📈 Top Exports from India (30 groups, FY 2015-16 → FY 2025-26, where to source, who buys, price-check links) · 📍 Source by State / City (181 districts & clusters across all 36 states/UTs) · 📦 What to Import & From Where (26 import groups, supplier countries, official foreign trade-promotion bodies).
 
 Also: Before-You-Start checklist · Trade Planner (type “export basmati rice to UK” → full flowchart with permissions, whom to meet, documents, money plan) · Step-by-step roadmaps · **Latest Rulings & Updates** · Shipment / licence / task trackers · Calculators (export price, import landed cost, CBM, FEMA deadline) · Documents library · Finance · Schemes · Procure & Sell · Markets & FTAs · Legal & Incoterms · Glossary with hover meanings.
 
