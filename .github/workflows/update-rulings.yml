@@ -1,4 +1,4 @@
-name: Update EXIM rulings
+name: Update EXIM rulings, buyer leads & tenders
 
 on:
   schedule:
@@ -23,12 +23,17 @@ jobs:
         with:
           node-version: "20"
       - name: Collect DGFT & RBI updates (no AI)
+        continue-on-error: true
         run: node scripts/fetch-updates.mjs
+      - name: Collect foreign buyer leads & tenders (World Bank, EU TED, news)
+        continue-on-error: true
+        run: node scripts/fetch-leads.mjs
       - name: Save changes
         run: |
           git config user.name "garcha-exim-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/updates.json data/status.json
+          git add data/updates.json data/status.json data/leads.json data/leads-status.json
           if git diff --cached --quiet; then echo "No changes"; exit 0; fi
-          git commit -m "Daily rulings update $(date -u +%Y-%m-%d)"
+          git commit -m "Daily rulings & leads update $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash || true
           git push

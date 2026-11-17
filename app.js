@@ -69,7 +69,7 @@ async function initCloud(){
 
 /* ---------- ROUTING ---------- */
 const VIEWS=[
- ["dashboard","Dashboard","◉"],["updates","Latest Rulings & Updates","📰"],["prep","Before You Start (checklist)","🧰"],["planner","Trade Planner (flowchart)","🧭"],["roadmap","Step-by-step Roadmap","➜"],["shipments","Shipment Tracker","⛴"],["todo","Pending Tasks","☑"],
+ ["dashboard","Dashboard","◉"],["updates","Latest Rulings & Updates","📰"],["leads","Buyer Leads & Tenders","🤝"],["topexports","Top Exports from India","📈"],["sourcefinder","Source by State / City","📍"],["whatimport","What to Import & From Where","📦"],["prep","Before You Start (checklist)","🧰"],["planner","Trade Planner (flowchart)","🧭"],["roadmap","Step-by-step Roadmap","➜"],["shipments","Shipment Tracker","⛴"],["todo","Pending Tasks","☑"],
  ["registrations","Licences & Registrations","🪪"],["documents","Documents Library","📄"],["calculators","Calculators","🧮"],
  ["finance","Finance & Payments","₹"],["schemes","Incentives & Schemes","🎯"],["procure","Procure & Sell","🔎"],
  ["markets","Markets & FTAs","🌍"],["legal","Legal & Incoterms","⚖"],["contacts","Contacts","👥"],
@@ -82,7 +82,7 @@ window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0)});
 function nav(){
   const c=cur();
   const ub=typeof unreadImportant==="function"?unreadImportant():0;
-  $("#nav").innerHTML=VIEWS.map(v=>'<a href="#'+v[0]+'" class="'+(v[0]===c?"on":"")+'"><span class="ic">'+v[2]+'</span>'+esc(v[1])+(v[0]==="updates"&&ub?' <span class="nbadge">'+ub+'</span>':'')+'</a>').join("");
+  $("#nav").innerHTML=VIEWS.map(v=>'<a href="#'+v[0]+'" class="'+(v[0]===c?"on":"")+'"><span class="ic">'+v[2]+'</span>'+esc(v[1])+(v[0]==="updates"&&ub?' <span class="nbadge">'+ub+'</span>':'')+(v[0]==="leads"&&typeof newLeads==="function"&&newLeads()?' <span class="nbadge">'+newLeads()+'</span>':'')+'</a>').join("");
   $("#navsel").innerHTML=VIEWS.map(v=>'<option value="'+v[0]+'"'+(v[0]===c?" selected":"")+'>'+esc(v[1])+'</option>').join("");
 }
 function modes(){const m=S.profile.mode;return m==="both"?["export","import"]:[m]}
@@ -125,6 +125,135 @@ function realDue(s){const sd=parseD(s.shipDate);return sd?addMonths(sd,RM(s.inrI
 
 /* ---------- VIEWS ---------- */
 const V={};
+/* ===== v6 MODULE: TOP EXPORTS · SOURCE BY LOCATION · WHAT TO IMPORT · BUYER LEADS & TENDERS ===== */
+const EG=Object.fromEntries(EXPORT_GROUPS.map(g=>[g[0],g]));
+const usd=m=>"US$ "+(m>=1000?(m/1000).toLocaleString("en-IN",{maximumFractionDigits:1})+" bn":Math.round(m).toLocaleString("en-IN")+" mn");
+const pct=(a,b)=>a>0?((b-a)/a*100):0;
+const cagr=(a,b,y)=>a>0?((Math.pow(b/a,1/y)-1)*100):0;
+const priceLinks=k=>(PRICE[k]||[]).concat(k==="gen"?[]:PRICE.gen).map(p=>'<a href="'+esc(p[1])+'" target="_blank" rel="noopener">'+esc(p[0])+'</a>').join(" · ");
+const ownTrade=k=>(EG[k]||[])[11]||"FIEO";
+function bodiesFor(list){return String(list||"").split(/,\s*|\s+&\s+|\(|\)/).map(s=>s.replace(/^(Saudi Arabia|UAE)$/,m=>m==="UAE"?"United Arab Emirates":m).trim()).map(s=>s==="USA"?"United States":s==="UK"?"United Kingdom":s).filter(s=>FOREIGN_BODIES[s])}
+
+/* ---------- TOP EXPORTS ---------- */
+let teSort="v26",teQ="";
+V.topexports=function(){
+  let rows=EXPORT_GROUPS.slice();
+  const key={v26:g=>g[5],grow:g=>pct(g[4],g[5]),long:g=>cagr(g[2],g[5],10),name:g=>-g[1].charCodeAt(0)}[teSort];
+  rows.sort((a,b)=>key(b)-key(a));
+  if(teQ)rows=rows.filter(g=>(g[1]+" "+g[6]+" "+g[7]+" "+g[8]).toLowerCase().includes(teQ.toLowerCase()));
+  const max=Math.max(...EXPORT_GROUPS.map(g=>g[5]));
+  return '<div class="card"><h2>📈 India’s biggest & fastest-growing exports</h2><p class="small muted">Total merchandise exports: FY 2015-16 '+usd(EXPORT_TOTAL[0])+' → FY 2019-20 '+usd(EXPORT_TOTAL[1])+' → FY 2024-25 '+usd(EXPORT_TOTAL[2])+' → <b>FY 2025-26 '+usd(EXPORT_TOTAL[3])+'</b>. Tap a group for products, where to source them, who buys most and how to check today’s price.</p>'+
+   '<div class="row gap wrap mt"><span class="small">Sort by:</span><div class="seg">'+[["v26","Biggest now"],["grow","Growth last year"],["long","10-year growth"]].map(x=>'<button data-tesort="'+x[0]+'" class="'+(teSort===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div><input id="teq" placeholder="Search e.g. rice, footwear, Gujarat, USA…" value="'+esc(teQ)+'" style="flex:1;min-width:200px"></div></div>'+
+   '<div class="card">'+rows.map((g,i)=>{const y1=pct(g[4],g[5]),c10=cagr(g[2],g[5],10);
+    return '<details class="tex"><summary><span class="trank">'+(i+1)+'</span><span class="tname"><b>'+esc(g[1])+'</b><span class="tbar"><i style="width:'+Math.max(2,g[5]/max*100)+'%"></i></span></span><span class="tval">'+usd(g[5])+'<br><span class="'+(y1>=0?"up":"down")+'">'+(y1>=0?"▲":"▼")+Math.abs(y1).toFixed(1)+'%</span> <span class="small muted">1 yr</span></span></summary>'+
+    '<div class="tbody"><table class="tbl res"><tr><td>FY 2015-16</td><td>'+usd(g[2])+'</td></tr><tr><td>FY 2019-20</td><td>'+usd(g[3])+'</td></tr><tr><td>FY 2024-25</td><td>'+usd(g[4])+'</td></tr><tr><td>FY 2025-26</td><td><b>'+usd(g[5])+'</b></td></tr><tr><td>Average yearly growth over 10 years</td><td>'+c10.toFixed(1)+'%</td></tr></table>'+
+    '<p><b>Products in this group:</b> '+esc(g[6])+'</p><p><b>Where to source in India:</b> '+esc(g[7])+' — see <a href="#sourcefinder" data-srcgroup="'+g[0]+'">districts &amp; cities</a></p><p><b>Countries that buy most:</b> '+esc(g[8])+'</p>'+
+    '<p><b>Export council:</b> '+esc(g[11])+'</p><p class="small"><b>💵 What should it cost?</b> Prices move daily — check: '+priceLinks(g[10])+'. Tip: in Tradestat, export value ÷ quantity for your 8-digit HS code gives the average price Indian exporters actually get.</p>'+
+    '<div class="row gap wrap"><button class="btn sm" data-teplan="'+g[0]+'">Plan an export of this</button><a class="btn sm ghost" href="#leads" data-leadsec="'+esc(g[1])+'">See buyer leads</a></div></div></details>'}).join("")+'</div><p class="small muted">'+esc(TRADE_SRC)+'</p>';
+};
+
+/* ---------- SOURCE BY STATE / CITY ---------- */
+let sfState="",sfQ="",sfGroup="";
+function sfPick(list,q){const ps=String(list).split(/,\s*/).map(x=>x.trim()).filter(Boolean);return (q&&ps.find(x=>x.toLowerCase().includes(q)))||ps[0]||""}
+V.sourcefinder=function(){
+  const st=DISTRICTS[sfState]?sfState:(DISTRICTS[S.profile.state]?S.profile.state:"Punjab");
+  let list=[];
+  Object.entries(DISTRICTS).forEach(([s,ds])=>ds.forEach(d=>list.push([s].concat(d))));
+  const q=sfQ.trim().toLowerCase();
+  list=list.filter(r=>q?(r.join(" ").toLowerCase().includes(q)):(sfGroup?r[3].split(",").includes(sfGroup):r[0]===st));
+  return '<div class="card"><h2>📍 What can I source near me for export?</h2><p class="small muted">Choose a state, or type a city, district or product. Each result shows what is made there, the local industry, the export council, the countries that buy most and where to check prices.</p>'+
+   '<div class="row gap wrap mt"><label class="f" style="min-width:200px"><span>State</span><select id="sfstate">'+Object.keys(DISTRICTS).map(s=>'<option'+(s===st&&!q&&!sfGroup?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select></label>'+
+   '<label class="f" style="flex:1;min-width:220px"><span>…or search a city / district / product</span><input id="sfq" placeholder="e.g. Ludhiana, Surat, mango, leather" value="'+esc(sfQ)+'"></label></div>'+
+   (sfGroup&&!q?'<p class="small">Showing districts for <b>'+esc((EG[sfGroup]||[])[1]||sfGroup)+'</b> across India · <button class="link" id="sfclear">show my state</button></p>':'')+'</div>'+
+   (list.length?list.map(r=>{const gs=r[3].split(",").map(k=>EG[k]).filter(Boolean);
+    return '<div class="card sf"><div class="row sb wrap gap"><h3>'+esc(r[1])+' <span class="small muted">· '+esc(r[0])+'</span></h3><button class="btn sm" data-sfplan="'+esc(sfPick(r[2],q))+'" data-sfcat="'+esc((gs[0]||[])[9]||"general")+'" data-sfc="'+esc(((gs[0]||[])[8]||"").split(",")[0])+'">Plan export</button></div>'+
+     '<p><b>Products:</b> '+esc(r[2])+'</p><p><b>Local industry:</b> '+esc(r[4])+'</p>'+
+     gs.map(g=>'<div class="sfg"><b>'+esc(g[1])+'</b> — India exported '+usd(g[5])+' in FY 2025-26 ('+(pct(g[4],g[5])>=0?"+":"")+pct(g[4],g[5]).toFixed(1)+'%).<br><span class="small">🌍 Buys most: '+esc(g[8])+'</span><br><span class="small">🏛 Council: '+esc(g[11])+' · 💵 Price check: '+priceLinks(g[10])+'</span></div>').join("")+
+     '<p class="small">📞 <b>Who to contact locally:</b> District Industries Centre (DIC), '+esc(r[1].replace(/\s*\(.*\)/,""))+' — supplier lists, cluster associations and the District Export Promotion Committee · <a href="'+G("District Industries Centre "+r[1].replace(/\s*\(.*\)/,"")+" "+r[0])+'" target="_blank" rel="noopener">Find DIC</a> · <a href="'+G(r[2].split(",")[0]+" manufacturers "+r[1].replace(/\s*\(.*\)/,""))+'" target="_blank" rel="noopener">Find manufacturers</a></p></div>'}).join(""):'<div class="card empty">Nothing found. Try a nearby district or a product name.</div>')+
+   '<p class="small muted">Compiled from One District One Product / Districts as Export Hubs products and well-known clusters. The official district list is at exporthubs.gov.in; confirm current suppliers with your DIC.</p>';
+};
+
+/* ---------- WHAT TO IMPORT ---------- */
+let wiQ="";
+V.whatimport=function(){
+  const max=Math.max(...IMPORT_GROUPS.map(g=>g[3]));
+  const rows=IMPORT_GROUPS.slice().sort((a,b)=>b[3]-a[3]).filter(g=>!wiQ||g.join(" ").toLowerCase().includes(wiQ.toLowerCase()));
+  return '<div class="card"><h2>📦 What India imports, and from where</h2><p class="small muted">Total merchandise imports: FY 2024-25 '+usd(IMPORT_TOTAL[0])+' → <b>FY 2025-26 '+usd(IMPORT_TOTAL[1])+'</b>. Each group shows the main supplier countries, what Indian businesses buy, cautions, and official trade-promotion bodies in the supplier countries (use their supplier directories and contact forms).</p><input id="wiq" placeholder="Search e.g. machinery, China, almonds…" value="'+esc(wiQ)+'"></div>'+
+   '<div class="card">'+rows.map((g,i)=>{const y=pct(g[2],g[3]);const bodies=bodiesFor(g[4]);
+    return '<details class="tex"><summary><span class="trank">'+(i+1)+'</span><span class="tname"><b>'+esc(g[1])+'</b><span class="tbar imp"><i style="width:'+Math.max(2,g[3]/max*100)+'%"></i></span></span><span class="tval">'+usd(g[3])+'<br><span class="'+(y>=0?"up":"down")+'">'+(y>=0?"▲":"▼")+Math.abs(y).toFixed(1)+'%</span></span></summary>'+
+     '<div class="tbody"><p><b>Main supplier countries:</b> '+esc(g[4])+'</p><p><b>What Indian businesses import:</b> '+esc(g[5])+'</p><p class="warn small">⚠ '+esc(g[6])+'</p>'+
+     (bodies.length?'<p><b>Find suppliers through official bodies:</b></p><ul>'+bodies.map(c=>'<li><b>'+esc(c)+':</b> '+FOREIGN_BODIES[c].map(b=>'<a href="'+esc(b[1])+'" target="_blank" rel="noopener">'+esc(b[0])+'</a>').join(" · ")+'</li>').join("")+'</ul>':'')+
+     '<p class="small">Also: the Indian Embassy commercial wing in each supplier country keeps verified exporter lists. 💵 Price check: '+priceLinks("gen")+'</p>'+
+     '<button class="btn sm" data-wiplan="'+g[0]+'">Plan this import</button></div></details>'}).join("")+'</div><p class="small muted">Values: Dept. of Commerce, India’s merchandise imports by commodity group (US$ million). Supplier countries are the usual main sources; check Tradestat import data for your HS code.</p>';
+};
+
+/* ---------- BUYER LEADS & TENDERS ---------- */
+let LEADS={items:[],generatedAt:"",status:null,loaded:false,loading:false,err:""};
+let ldF={kind:"",sector:"",q:"",only:"all",mine:false};
+let leadRead=new Set();try{leadRead=new Set(JSON.parse(localStorage.getItem("garcha-lead-read")||"[]"))}catch(e){}
+function saveLeadRead(){try{localStorage.setItem("garcha-lead-read",JSON.stringify([...leadRead].slice(-5000)))}catch(e){}}
+const CAT2SEC={agri_fresh:"Agri & food",agri_grain:"Agri & food",food_proc:"Agri & food",marine:"Agri & food",animal:"Agri & food",plants:"Agri & food",textile:"Textiles & apparel",handicraft:"Furniture & home textiles",leather:"Textiles & apparel",gems:"Other",engg:"Machinery",steel:"Minerals & metals",electronics:"Electronics & IT",chem:"Chemicals",pharma:"Medical & pharma",meddev:"Medical & pharma",cosmetic:"Chemicals",plastic:"Chemicals",toys:"Sports, toys & music",vehicle:"Vehicles & parts",services:"Services (non-consulting)",general:"Other"};
+function leadSector(i){if(i.sector)return i.sector;return CAT2SEC[detectCat(i.title)]||"Other"}
+async function loadLeads(manual){
+  if(LEADS.loading)return;LEADS.loading=true;LEADS.err="";if(manual)render();
+  try{const [l,st]=await Promise.all([getJSON("leads.json"),getJSON("leads-status.json").catch(()=>null)]);
+    LEADS.items=(l.items||[]).map(i=>Object.assign(i,{sec:leadSector(i)}));LEADS.generatedAt=l.generatedAt||"";LEADS.status=st;LEADS.loaded=true;
+    try{localStorage.setItem("garcha-leads-cache",JSON.stringify({l,st}))}catch(e){}
+    if(!localStorage.getItem("garcha-lead-init")){const keep=new Set(LEADS.items.slice().sort((a,b)=>String(b.date||b.firstSeen).localeCompare(String(a.date||a.firstSeen))).slice(0,25).map(i=>i.id));LEADS.items.forEach(i=>{if(!keep.has(i.id))leadRead.add(i.id)});saveLeadRead();try{localStorage.setItem("garcha-lead-init","1")}catch(e){}}
+  }catch(e){LEADS.err="Could not load new leads — showing the last saved list.";try{const c=JSON.parse(localStorage.getItem("garcha-leads-cache")||"null");if(c){LEADS.items=(c.l.items||[]).map(i=>Object.assign(i,{sec:leadSector(i)}));LEADS.generatedAt=c.l.generatedAt;LEADS.status=c.st;LEADS.loaded=true}}catch(_){}}
+  LEADS.loading=false;render();
+}
+function newLeads(){return LEADS.items.filter(i=>!leadRead.has(i.id)).length}
+function myWords(){const w=[S.profile.product,S.profile.markets,...S.plans.map(p=>p.product)].join(" ").toLowerCase().split(/[^a-z0-9]+/).filter(x=>x.length>3&&!["export","import","products","other"].includes(x));return [...new Set(w)]}
+function leadRow(i){const rd=leadRead.has(i.id),dl=parseD(i.deadline),left=dl?daysBetween(today(),dl):null,pub=parseD(i.date||i.firstSeen);
+  return '<div class="upd'+(rd?" rd":"")+'"><div class="ur"><span class="udate">'+(pub?showD(pub):"")+'</span><span class="pill '+(i.kind==="Tender"?"green":"amber")+'">'+esc(i.kind)+'</span>'+(!rd?'<span class="pill red">New</span>':'')+'<span class="usrc">'+esc(i.srcName)+'</span>'+(i.country?'<span>🌍 '+esc(i.country)+'</span>':'')+'<span>🏷 '+esc(i.sec)+'</span></div>'+
+   '<a class="ut" href="'+esc(i.link)+'" target="_blank" rel="noopener" data-leadopen="'+esc(i.id)+'">'+esc(i.title)+'</a>'+
+   (i.buyer?'<p class="small">Buyer: <b>'+esc(i.buyer)+'</b>'+(i.ref?' · Ref '+esc(i.ref):'')+'</p>':'')+
+   '<p class="small">'+(dl?'⏳ Closes <b>'+showD(dl)+'</b> '+(left<0?'<span class="warn">(closed)</span>':left<=7?'<span class="warn">('+left+' days left)</span>':'('+left+' days left)'):(i.kind==="Tender"?'⏳ Deadline: see notice':''))+'</p>'+
+   '<p class="small muted">'+esc(i.note||"")+'</p>'+(!rd?'<button class="link small" data-leadread="'+esc(i.id)+'">Mark as read</button>':'')+'</div>'}
+V.leads=function(){
+  if(!LEADS.loaded&&!LEADS.loading&&!LEADS.err)setTimeout(()=>loadLeads(true),0);
+  const words=myWords();
+  const secs=[...new Set(LEADS.items.map(i=>i.sec))].sort();
+  let L=LEADS.items.filter(i=>(!ldF.kind||i.kind===ldF.kind)&&(!ldF.sector||i.sec===ldF.sector)&&(ldF.only!=="new"||!leadRead.has(i.id))&&(!ldF.mine||words.some(w=>(i.title+" "+i.sec+" "+(i.country||"")).toLowerCase().includes(w)))&&(!ldF.q||(i.title+" "+i.buyer+" "+i.country+" "+i.sec).toLowerCase().includes(ldF.q.toLowerCase())));
+  const st=LEADS.status;
+  let h='<div class="card"><div class="row sb wrap gap"><h2>🤝 Buyer leads & foreign tenders</h2><div class="row gap wrap"><button class="btn sm" id="ldnow" '+(LEADS.loading?"disabled":"")+'>'+(LEADS.loading?"Checking…":"Check now")+'</button><button class="btn sm ghost" id="ldallread">Mark all read</button></div></div>'+
+   '<p class="small muted">Collected automatically twice a day: <b>World Bank-funded tenders</b> for goods & services worldwide (Indian firms are generally eligible), <b>EU government supply tenders (TED)</b>, and <b>news of foreign companies, brands & startups sourcing from India</b>, buyer delegations and buyer-seller meets. Unread items are marked <span class="pill red">New</span>.</p>'+
+   '<p class="small">Last collected: <b>'+fmtDT(LEADS.generatedAt)+'</b>'+(st?' · sources working '+st.ok+'/'+st.total:'')+' · '+LEADS.items.length+' open leads · '+newLeads()+' new</p>'+(LEADS.err?'<p class="warn">'+esc(LEADS.err)+'</p>':'')+
+   '<div class="row gap wrap mt"><div class="seg">'+[["","All"],["Tender","Tenders"],["Buyer news","Buyer news"]].map(x=>'<button data-ldkind="'+x[0]+'" class="'+(ldF.kind===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div>'+
+   '<div class="seg">'+[["all","All"],["new","Unread"]].map(x=>'<button data-ldonly="'+x[0]+'" class="'+(ldF.only===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div>'+
+   '<select id="ldsec"><option value="">All sectors</option>'+secs.map(s=>'<option'+(ldF.sector===s?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select>'+
+   '<label class="inl" style="white-space:normal"><input type="checkbox" id="ldmine" '+(ldF.mine?"checked":"")+'> Match my products'+(words.length?' ('+esc(words.slice(0,4).join(", "))+')':' (set a product on the Dashboard)')+'</label>'+
+   '<input id="ldq" placeholder="Search e.g. textiles, Kenya, medical…" value="'+esc(ldF.q)+'" style="flex:1;min-width:180px"></div></div>';
+  if(!LEADS.loaded&&LEADS.loading)return h+'<div class="card empty">Loading today’s leads…</div>';
+  h+='<div class="card">'+(L.length?L.slice(0,150).map(leadRow).join(""):'<p class="muted">No leads match these filters.</p>')+(L.length>150?'<p class="small muted">Showing 150 of '+L.length+' — narrow the filters.</p>':'')+'</div>';
+  h+='<div class="card note small"><b>More places to find foreign buyers (sign-in needed, so not collected automatically):</b> <a href="https://trade.gov.in" target="_blank" rel="noopener">DGFT Trade Connect trade leads</a> · <a href="https://www.ungm.org/Public/Notice" target="_blank" rel="noopener">UN Global Marketplace tenders</a> · <a href="https://www.adb.org/projects/tenders" target="_blank" rel="noopener">Asian Development Bank tenders</a> · <a href="https://www.afdb.org/en/projects-and-operations/procurement" target="_blank" rel="noopener">African Development Bank</a> · <a href="https://www.indiantradeportal.in" target="_blank" rel="noopener">Indian Trade Portal</a> · your EPC’s trade-enquiry bulletin.<br><br><b>⚠ Stay safe:</b> genuine buyers and tenders never ask you to pay a “registration” or “sample approval” fee to them. Check the buyer’s official website and registry before sending samples or prices; for private buyers use advance payment or an LC; take an ECGC buyer report.</div>';
+  return h;
+};
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const d=b.dataset;
+  if(d.tesort){teSort=d.tesort;render();return}
+  if(d.srcgroup){sfGroup=d.srcgroup;sfQ="";return}
+  if(d.leadsec){const g=EXPORT_GROUPS.find(x=>x[1]===d.leadsec);ldF.sector=g?(CAT2SEC[g[9]]||""):"";if(ldF.sector==="Other")ldF.sector="";ldF.q="";ldF.kind="";return}
+  if(d.teplan){const g=EG[d.teplan];PL=newPlanInput({dir:"export",product:g[6].split(",")[0].trim(),country:findCountry(g[8].split(",")[0])||"Other country"});PL.cat=g[9];PL._catTouched=true;location.hash="planner";return}
+  if(d.sfplan){PL=newPlanInput({dir:"export",product:d.sfplan.trim(),country:findCountry(d.sfc||"")||"Other country"});if(PL.cat==="general"&&d.sfcat)PL.cat=d.sfcat;location.hash="planner";return}
+  if(d.wiplan){const g=IMPORT_GROUPS.find(x=>x[0]===d.wiplan);PL=newPlanInput({dir:"import",product:g[5].split(",")[0].trim(),country:findCountry(g[4].split(",")[0])||"Other country"});PL.cat=g[7];PL._catTouched=true;location.hash="planner";return}
+  if(b.id==="sfclear"){sfGroup="";render();return}
+  if(b.id==="ldnow"){loadLeads(true);return}
+  if(b.id==="ldallread"){LEADS.items.forEach(i=>leadRead.add(i.id));saveLeadRead();render();return}
+  if(d.ldkind!=null){ldF.kind=d.ldkind;render();return}
+  if(d.ldonly){ldF.only=d.ldonly;render();return}
+  if(d.leadread){leadRead.add(d.leadread);saveLeadRead();render();return}
+  if(d.leadopen){leadRead.add(d.leadopen);saveLeadRead();setTimeout(render,300);return}
+});
+document.addEventListener("input",e=>{const t=e.target;
+  if(t.id==="teq"){teQ=t.value;render()} if(t.id==="sfq"){sfQ=t.value;render()} if(t.id==="wiq"){wiQ=t.value;render()} if(t.id==="ldq"){ldF.q=t.value;render()}});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.id==="sfstate"){sfState=t.value;sfQ="";sfGroup="";render()} if(t.id==="ldsec"){ldF.sector=t.value;render()} if(t.id==="ldmine"){ldF.mine=t.checked;render()}});
+window.addEventListener("online",()=>loadLeads(false));
+
+setTimeout(()=>loadLeads(false),0);
 V.dashboard=function(){
   const p=S.profile, ms=modes();
   const prog=ms.map(m=>{const pr=progress(m),nx=nextSteps(m,3);
@@ -141,6 +270,9 @@ V.dashboard=function(){
   (()=>{if(!UPD.items.length)return '<div class="card"><h3>📰 Latest rulings</h3><p class="muted small">'+(UPD.loading?"Checking DGFT & RBI…":"Connect to the internet to load today’s DGFT & RBI updates.")+'</p><a class="btn ghost" href="#updates">Open updates →</a></div>';
     const L=UPD.items.filter(i=>i.important).slice(0,5);
     return '<div class="card"><div class="row sb wrap gap"><h3>📰 What changed recently</h3><span class="small muted">collected '+fmtDT(UPD.generatedAt)+'</span></div><ul class="plain">'+L.map(i=>'<li>'+(readSet.has(i.id)?'':'<span class="pill amber">New</span> ')+'<span class="small muted">'+esc(showD(parseD(i.date)))+' · '+esc(i.kind||"")+' '+esc(i.num||"")+'</span><br><a href="'+esc(i.link)+'" target="_blank" rel="noopener" data-updopen="'+esc(i.id)+'">'+esc(i.title)+'</a></li>').join("")+'</ul><a class="btn ghost" href="#updates">All updates ('+UPD.items.length+') →</a></div>'})()+
+  (()=>{if(!LEADS.items.length)return '<div class="card"><h3>🤝 Buyer leads & tenders</h3><p class="muted small">'+(LEADS.loading?"Checking World Bank, EU TED & news…":"Connect to the internet to load today’s foreign buyer leads and tenders.")+'</p><a class="btn ghost" href="#leads">Open leads →</a></div>';
+    const L=LEADS.items.filter(i=>!leadRead.has(i.id)).slice(0,5);
+    return '<div class="card"><div class="row sb wrap gap"><h3>🤝 New buyer leads & tenders</h3><span class="small muted">collected '+fmtDT(LEADS.generatedAt)+'</span></div>'+(L.length?'<ul class="plain">'+L.map(i=>'<li><span class="pill red">New</span> <span class="small muted">'+esc(showD(parseD(i.date||i.firstSeen)))+' · '+esc(i.kind)+(i.country?' · '+esc(i.country):'')+'</span><br><a href="'+esc(i.link)+'" target="_blank" rel="noopener" data-leadopen="'+esc(i.id)+'">'+esc(i.title)+'</a></li>').join("")+'</ul>':'<p class="muted small">No unread leads — you are up to date.</p>')+'<a class="btn ghost" href="#leads">All leads ('+LEADS.items.length+', '+newLeads()+' new) →</a></div>'})()+
   (()=>{const vis=PREP.filter(prepVisible),d=vis.filter(i=>prepDone(i.id)).length,m=vis.filter(i=>i.need==="Must"&&!prepDone(i.id)).length,pc=vis.length?Math.round(d*100/vis.length):0;
     return '<div class="card"><div class="row sb"><h3>🧰 Before you start</h3><b class="big">'+pc+'%</b></div><div class="bar"><i style="width:'+pc+'%"></i></div><p class="muted small">'+(m?m+' must-have items still missing (bank, GST, IEC…).':'All must-haves in place.')+'</p><a class="btn ghost" href="#prep">Open checklist →</a></div>'})()+
   '<div class="card"><h3>Your profile</h3><div class="grid4">'+
@@ -982,5 +1114,5 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){window.addEventLi
 render();
 setTimeout(initCloud,0);
 setTimeout(()=>loadUpdates(false),0);
-window.__GARCHA={RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
+window.__GARCHA={LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
 })();
