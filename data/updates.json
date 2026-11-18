@@ -1,7 +1,87 @@
 {
- "generatedAt": "2026-11-18T08:45:53.094Z",
- "lastChange": "2026-11-15T14:47:34.013Z",
+ "generatedAt": "2026-11-18T21:30:24.419Z",
+ "lastChange": "2026-11-18T21:30:24.419Z",
  "items": [
+  {
+   "id": "dgft_pn:41/2026-27:Opening of one-time window for submission of applications for allocation of available quantity under TRQ Scheme for impo",
+   "src": "dgft_pn",
+   "srcName": "DGFT Public Notices",
+   "kind": "Public Notice",
+   "official": true,
+   "num": "41/2026-27",
+   "title": "Opening of one-time window for submission of applications for allocation of available quantity under TRQ Scheme for import of raw sugar - reg.",
+   "desc": "",
+   "date": "2026-11-18",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/bc8bf4ea-e878-47fa-964a-c669cbedf637/PN-41_0001.pdf",
+   "firstSeen": "2026-11-18",
+   "tags": [
+    "Import policy",
+    "FTA / Origin",
+    "Agri & food"
+   ],
+   "important": true,
+   "rules": []
+  },
+  {
+   "id": "dgft_tn:35/2026-27:Amendments Guidelines for Market Access Support under Export Promotion Mission (EPM) — Niryat Disha",
+   "src": "dgft_tn",
+   "srcName": "DGFT Trade Notices",
+   "kind": "Trade Notice",
+   "official": true,
+   "num": "35/2026-27",
+   "title": "Amendments Guidelines for Market Access Support under Export Promotion Mission (EPM) — Niryat Disha",
+   "desc": "",
+   "date": "2026-11-17",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/d185b3f0-b0a9-4f19-a455-862d6419e6b6/Trade%20Notice-%20MAS%20Amendment%2017.11.2026%20digitally%20signed.pdf",
+   "firstSeen": "2026-11-18",
+   "tags": [
+    "Export Promotion Mission"
+   ],
+   "important": true,
+   "rules": [
+    "epm"
+   ]
+  },
+  {
+   "id": "dgft_tn:36/2026-27:Amendments in Guidelines for Facilitating Logistics Interventions for Freight and Transport (LIFT) under Export Promotio",
+   "src": "dgft_tn",
+   "srcName": "DGFT Trade Notices",
+   "kind": "Trade Notice",
+   "official": true,
+   "num": "36/2026-27",
+   "title": "Amendments in Guidelines for Facilitating Logistics Interventions for Freight and Transport (LIFT) under Export Promotion Mission (EPM) — Niryat Disha",
+   "desc": "",
+   "date": "2026-11-17",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/2840b5f8-ae9f-4db9-b4f2-4c4c67b3e2f1/Trade%20Notice%2036%202026-27-%20digitally%20signed.pdf",
+   "firstSeen": "2026-11-18",
+   "tags": [
+    "Export Promotion Mission"
+   ],
+   "important": true,
+   "rules": [
+    "epm"
+   ]
+  },
+  {
+   "id": "dgft_tn:37/2026-27:Amendments to the Guidelines for Trade Regulations, Accreditation and Compliance Enablement under Export Promotion Missi",
+   "src": "dgft_tn",
+   "srcName": "DGFT Trade Notices",
+   "kind": "Trade Notice",
+   "official": true,
+   "num": "37/2026-27",
+   "title": "Amendments to the Guidelines for Trade Regulations, Accreditation and Compliance Enablement under Export Promotion Mission (EPM) -Niryat Disha",
+   "desc": "",
+   "date": "2026-11-17",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/6c7db5e1-2378-422b-9d1a-5e58df86083a/Trade%20notice%2037%202026-27%20digitally%20signed.pdf",
+   "firstSeen": "2026-11-18",
+   "tags": [
+    "Export Promotion Mission"
+   ],
+   "important": true,
+   "rules": [
+    "epm"
+   ]
+  },
   {
    "id": "dgft_pn:40/2026-27:Amendments in Para 2.88 of Handbook of Procedures, 2023 and Appendix 2B of Foreign Trade Policy, 2023-reg.",
    "src": "dgft_pn",
@@ -12,7 +92,7 @@
    "title": "Amendments in Para 2.88 of Handbook of Procedures, 2023 and Appendix 2B of Foreign Trade Policy, 2023-reg.",
    "desc": "",
    "date": "2026-11-13",
-   "link": "https://content.dgft.gov.in/Website/dgftprod/768cd243-7a87-4e5b-a78a-691d64512816/PN_0001.pdf",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/beda87ac-499c-4fdc-9ef1-a90b8c0297a3/PN_0001.pdf",
    "firstSeen": "2026-11-15",
    "tags": [
     "FTP / Handbook"
@@ -107,7 +187,7 @@
    "title": "Inviting TRQ Applications under India–United Kingdom Comprehensive Economic and Trade Agreement (CETA) for Calendar Year (CY) 2027 – reg.",
    "desc": "",
    "date": "2026-11-06",
-   "link": "https://content.dgft.gov.in/Website/dgftprod/cf25d3dd-70a2-435b-9951-440dbf7f5792/Scan_0194.pdf",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/871f8683-eda1-42ad-917d-46506ef66617/Scan_0194.pdf",
    "firstSeen": "2026-11-15",
    "tags": [
     "FTA / Origin"
