@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-17T21:51:37.883Z",
+ "runAt": "2026-11-18T08:46:18.264Z",
  "sources": [
   {
    "id": "wb",
@@ -19,11 +19,11 @@
    "id": "news",
    "name": "Buyer & sourcing news",
    "ok": true,
-   "count": 20,
+   "count": 21,
    "error": ""
   }
  ],
  "ok": 3,
  "total": 3,
- "added": 34
+ "added": 12
 }
