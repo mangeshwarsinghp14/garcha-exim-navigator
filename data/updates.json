@@ -1,7 +1,28 @@
 {
- "generatedAt": "2026-11-19T21:42:40.247Z",
- "lastChange": "2026-11-18T21:30:24.419Z",
+ "generatedAt": "2026-11-20T08:48:20.864Z",
+ "lastChange": "2026-11-20T08:48:20.864Z",
  "items": [
+  {
+   "id": "rbi_press::Reserve Bank issues Foreign Exchange Management (Export and Import of Goods and Services) (Second Amendment) Regulations",
+   "src": "rbi_press",
+   "srcName": "RBI Press Releases (trade & forex)",
+   "kind": "RBI Press Release",
+   "official": true,
+   "num": "",
+   "title": "Reserve Bank issues Foreign Exchange Management (Export and Import of Goods and Services) (Second Amendment) Regulations, 2026",
+   "desc": "The Foreign Exchange Management (Export of Goods and Services) Regulations, 2015 were superseded by the Foreign Exchange Management (Export and Import of Goods and Services) Regulations, 2026, which were issued on January 13, 2026 , and became effective from October 01, 2026. The new regulations are",
+   "date": "2026-11-20",
+   "link": "https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=64009",
+   "firstSeen": "2026-11-20",
+   "tags": [
+    "FEMA / payments",
+    "Import policy"
+   ],
+   "important": true,
+   "rules": [
+    "realisation"
+   ]
+  },
   {
    "id": "dgft_pn:41/2026-27:Opening of one-time window for submission of applications for allocation of available quantity under TRQ Scheme for impo",
    "src": "dgft_pn",
