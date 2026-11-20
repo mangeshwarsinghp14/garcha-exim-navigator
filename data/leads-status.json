@@ -1,11 +1,11 @@
 {
- "runAt": "2026-11-20T08:48:45.985Z",
+ "runAt": "2026-11-20T21:25:41.389Z",
  "sources": [
   {
    "id": "wb",
    "name": "World Bank tenders",
    "ok": true,
-   "count": 193,
+   "count": 194,
    "error": ""
   },
   {
@@ -19,11 +19,11 @@
    "id": "news",
    "name": "Buyer & sourcing news",
    "ok": true,
-   "count": 22,
+   "count": 27,
    "error": ""
   }
  ],
  "ok": 3,
  "total": 3,
- "added": 254
+ "added": 14
 }
