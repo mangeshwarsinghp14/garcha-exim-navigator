@@ -77,7 +77,37 @@ const VIEWS=[
 ];
 if(!AI_OK){const ai=VIEWS.findIndex(v=>v[0]==="advisor");if(ai>=0)VIEWS.splice(ai,1)}
 function cur(){const h=(location.hash||"").replace("#","");return VIEWS.some(v=>v[0]===h)?h:"dashboard"}
-window.addEventListener("hashchange",()=>{render();window.scrollTo(0,0)});
+/* ---------- IN-APP NAVIGATION (v10): Back button, each step remembered with its filters and scroll ---------- */
+const NAV={popping:false,y:0,i:0,h:"",t:null};
+function navOpenKey(d){return d.dataset.dmk||((d.querySelector("summary")||{}).textContent||"").trim().slice(0,80)}
+function navOpenKeys(){return $$("#main details[open]").map(navOpenKey)}
+function navReopen(keys){if(!keys||!keys.length)return;$$("#main details").forEach(d=>{if(keys.includes(navOpenKey(d)))d.open=true})}
+function navSnap(){return {open:navOpenKeys(),tm:Object.assign({},tmF),dm:Object.assign({},dmF),sf:[sfQ,sfState,sfGroup],te:teQ,wi:wiQ,ld:Object.assign({},ldF)}}
+function navDepth(){return (history.state&&history.state.i)||0}
+function navSave(){try{const st=Object.assign({},history.state||{},{h:cur(),y:Math.round(window.scrollY||0),g:navSnap()});if(st.i==null)st.i=0;history.replaceState(st,"")}catch(e){}}
+function navSaveSoon(){clearTimeout(NAV.t);NAV.t=setTimeout(navSave,400)} // Safari limits how often history can be updated
+function navRestore(g){if(!g)return;try{Object.assign(tmF,g.tm||{});Object.assign(dmF,g.dm||{});if(g.sf){sfQ=g.sf[0]||"";sfState=g.sf[1]||"";sfGroup=g.sf[2]||""}teQ=g.te||"";wiQ=g.wi||"";Object.assign(ldF,g.ld||{})}catch(e){}}
+function navLabel(h){const v=VIEWS.find(x=>x[0]===h);return v?v[1].split(":")[0].trim():"previous page"}
+/* a step inside the same page (tab, product, country) gets its own Back step */
+function navStep(change){navSave();const from=cur(),i=navDepth();change();try{history.pushState({i:i+1,from,fromStep:true},"",location.href)}catch(e){}render();window.scrollTo(0,0)}
+function navUI(){const b=$("#backbtn");if(!b)return;const st=history.state||{},d=navDepth(),c=cur();
+  if(d>0){b.hidden=false;b.textContent="← "+(st.fromStep&&st.from===c?"Back":"Back to "+navLabel(st.from));b.dataset.mode="back"}
+  else if(c!=="dashboard"){b.hidden=false;b.textContent="🏠 Home";b.dataset.mode="home"}
+  else b.hidden=true;
+  NAV.i=d;NAV.h=c;
+  if(NAV.bootY&&Date.now()<NAV.bootUntil&&document.documentElement.scrollHeight>=NAV.bootY+window.innerHeight-20){window.scrollTo(0,NAV.bootY);NAV.bootY=0}}
+window.addEventListener("popstate",e=>{if(!e.state)return; // a plain link to a new page — handled by hashchange
+  NAV.popping=true;NAV.y=e.state.y||0;navRestore(e.state.g);render();navReopen((e.state.g||{}).open);window.scrollTo(0,NAV.y);setTimeout(()=>{NAV.popping=false},400)});
+window.addEventListener("hashchange",()=>{
+  if(NAV.popping){render();navReopen(((history.state||{}).g||{}).open);window.scrollTo(0,NAV.y);return}
+  try{history.replaceState({i:NAV.i+1,from:NAV.h},"")}catch(e){}
+  render();window.scrollTo(0,0)});
+document.addEventListener("click",e=>{if(e.target.closest("button,a"))navSave()},true); // remember where you were before any tap that may navigate
+document.addEventListener("change",e=>{if(e.target.matches("select"))navSave()},true);
+window.addEventListener("scroll",()=>{navSaveSoon();const t=$("#totop");if(t)t.hidden=window.scrollY<700},{passive:true});
+document.addEventListener("click",e=>{const b=e.target.closest("#backbtn,#totop");if(!b)return;
+  if(b.id==="totop"){window.scrollTo({top:0,behavior:"smooth"});return}
+  if(b.dataset.mode==="back")history.back();else location.hash="dashboard"});
 
 function nav(){
   const c=cur();
@@ -164,6 +194,7 @@ V.sourcefinder=function(){
   return '<div class="card"><h2>📍 What can I source near me for export?</h2><p class="small muted">Choose a state, or type a city, district or product. Each result shows what is made there, the local industry, the export council, the countries that buy most and where to check prices.</p>'+
    '<div class="row gap wrap mt"><label class="f" style="min-width:200px"><span>State</span><select id="sfstate">'+Object.keys(DISTRICTS).map(s=>'<option'+(s===st&&!q&&!sfGroup?" selected":"")+'>'+esc(s)+'</option>').join("")+'</select></label>'+
    '<label class="f" style="flex:1;min-width:220px"><span>…or search a city / district / product</span><input id="sfq" placeholder="e.g. Ludhiana, Surat, mango, leather" value="'+esc(sfQ)+'"></label></div>'+
+   (q?'<p class="small">Showing results for “<b>'+esc(sfQ)+'</b>” · <button class="link" id="sfclearq">clear search, show my state</button></p>':'')+
    (sfGroup&&!q?'<p class="small">Showing districts for <b>'+esc((EG[sfGroup]||[])[1]||sfGroup)+'</b> across India · <button class="link" id="sfclear">show my state</button></p>':'')+'</div>'+
    (list.length?list.map(r=>{const gs=r[3].split(",").map(k=>EG[k]).filter(Boolean);
     return '<div class="card sf"><div class="row sb wrap gap"><h3>'+esc(r[1])+' <span class="small muted">· '+esc(r[0])+'</span></h3><button class="btn sm" data-sfplan="'+esc(sfPick(r[2],q))+'" data-sfcat="'+esc((gs[0]||[])[9]||"general")+'" data-sfc="'+esc(((gs[0]||[])[8]||"").split(",")[0])+'">Plan export</button></div>'+
@@ -240,6 +271,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b
   if(d.sfplan){PL=newPlanInput({dir:"export",product:d.sfplan.trim(),country:findCountry(d.sfc||"")||"Other country"});if(PL.cat==="general"&&d.sfcat)PL.cat=d.sfcat;location.hash="planner";return}
   if(d.wiplan){const g=IMPORT_GROUPS.find(x=>x[0]===d.wiplan);PL=newPlanInput({dir:"import",product:g[5].split(",")[0].trim(),country:findCountry(g[4].split(",")[0])||"Other country"});PL.cat=g[7];PL._catTouched=true;location.hash="planner";return}
   if(b.id==="sfclear"){sfGroup="";render();return}
+  if(b.id==="sfclearq"){sfQ="";sfGroup="";render();return}
   if(b.id==="ldnow"){loadLeads(true);return}
   if(b.id==="ldallread"){LEADS.items.forEach(i=>leadRead.add(i.id));saveLeadRead();render();return}
   if(d.ldkind!=null){ldF.kind=d.ldkind;render();return}
@@ -473,13 +505,15 @@ function render(){
   const c=cur();
   const ae=document.activeElement, fk=focusKey(ae);let sel=null;try{sel=ae&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null}catch(_){}
   const openNodes=$$(".node.open [data-pldone]").map(x=>x.dataset.pldone);
-  $("#main").innerHTML=V[c]();
+  const keepOpen=$("#main").dataset.v===c?navOpenKeys():null; // open sections stay open when the same page redraws
+  $("#main").innerHTML=V[c]();if(keepOpen)navReopen(keepOpen);$("#main").dataset.v=c;
   openNodes.forEach(k=>{const n=$('[data-pldone="'+CSS.escape(k)+'"]');if(n)n.closest(".node").classList.add("open")});
   decorateTerms($("#main"));termsBtn();hideTip();
   if(fk){const n=$(fk);if(n){n.focus({preventScroll:true});if(sel){try{n.setSelectionRange(sel[0],sel[1])}catch(_){}}}}
   setSync(syncState);
   if(c==="backup"){const s2=$("#sync2");if(s2)s2.innerHTML=$("#sync").innerHTML}
   $$("textarea[data-note]").forEach(autoGrow);
+  navUI();navSaveSoon();
 }
 function autoGrow(t){t.style.height="auto";t.style.height=(t.scrollHeight+2)+"px"}
 
@@ -1217,9 +1251,9 @@ function tmDashCard(){
   return '<div class="card"><div class="row sb wrap gap"><h3>🗺 '+(p.dir==="X"?"Top buyers":"Top sellers")+' of '+esc(tmShort(p.name))+'</h3><span class="small muted">'+p.year+'</span></div><ul class="plain">'+B.map(b=>'<li><b>'+esc(tmCN(b[0]))+'</b> — '+tmUSD(b[1])+(p.dir==="X"&&tmIsOpp(p,b)?' <span class="pill green">Gap for India</span>':'')+'</li>').join("")+'</ul><a class="btn ghost" href="#trademap" data-tmgo="'+p.hs+'">Open Trade Map →</a></div>';
 }
 document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const d=b.dataset;
-  if(d.tmtab){tmF.tab=d.tmtab;tmSave();render();return}
-  if(d.tmgo){tmF.tab="product";tmF.hs=d.tmgo;tmF.all=false;tmSave();if(location.hash!=="#trademap")location.hash="trademap";else{render();window.scrollTo(0,0)}return}
-  if(d.tmcountry){tmF.tab="country";tmF.c=d.tmcountry;tmSave();if(location.hash!=="#trademap")location.hash="trademap";else{render();window.scrollTo(0,0)}return}
+  if(d.tmtab){navStep(()=>{tmF.tab=d.tmtab;tmSave()});return}
+  if(d.tmgo){const go=()=>{tmF.tab="product";tmF.hs=d.tmgo;tmF.all=false;tmSave()};if(location.hash!=="#trademap"){go();location.hash="trademap"}else navStep(go);return}
+  if(d.tmcountry){const go=()=>{tmF.tab="country";tmF.c=d.tmcountry;tmSave()};if(location.hash!=="#trademap"){go();location.hash="trademap"}else navStep(go);return}
   if(b.id==="tmall"){tmF.all=!tmF.all;render();return}
   if(b.id==="tmnow"){loadTM(true);return}
   if(d.tmplan){const p=tmP(d.tmplan);if(!p)return;PL=newPlanInput({dir:p.dir==="X"?"export":"import",product:tmShort(p.name),country:findCountry(tmCN(+d.tmc))||"Other country"});PL.hs=p.hs;location.hash="planner";return}
@@ -1228,8 +1262,8 @@ document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b
   if(d.tmgrp){const p=TM.d&&TM.d.products.find(x=>x.grp===d.tmgrp&&x.dir===d.tmdir2);tmF.tab="product";tmF.hs=p?p.hs:"";tmSave();location.hash="trademap";return}
 });
 document.addEventListener("change",e=>{const t=e.target;
-  if(t.id==="tmhs"){tmF.hs=t.value;tmF.all=false;tmSave();render();return}
-  if(t.id==="tmc"){tmF.c=t.value;tmSave();render();return}
+  if(t.id==="tmhs"){const v=t.value;navStep(()=>{tmF.hs=v;tmF.all=false;tmSave()});return}
+  if(t.id==="tmc"){const v=t.value;navStep(()=>{tmF.c=v;tmSave()});return}
 });
 document.addEventListener("input",e=>{const t=e.target;if(t.id==="tmoq"){tmF.oq=t.value;render()}});
 setTimeout(()=>{if(!TM.loaded&&(myWords().length||cur()==="trademap"))loadTM(false)},1500);
@@ -1320,7 +1354,7 @@ function dmShareText(){
   const rows=dmSellRows().filter(r=>dmF.src==="all"||r.src===dmF.src).filter(r=>!dmF.q||(r.what+" "+r.where).toLowerCase().includes(dmF.q.toLowerCase())).slice(0,15);
   return "Who wants what & where to procure it in India — GARCHA EXIM Navigator\n\n"+rows.map((r,i)=>(i+1)+". "+r.what+" — "+r.where+(r.when?" (closes "+r.when+")":"")+"\n   Procure: "+r.ds.map(d=>d.name+", "+d.st).join("; ")+(()=>{const L=r.p&&dmLadder(r.p,r.c,r.iso);return L?"\n   Per kg: buy ≤ ₹"+(L.procure*L.R).toFixed(0)+" · FCA warehouse ₹"+(L.fca*L.R).toFixed(0)+" · FOB ₹"+(L.fob*L.R).toFixed(0)+(L.pr.cif?" · buyer pays ~₹"+(L.pr.cif*L.R).toFixed(0)+" CIF":""):""})()+(r.link?"\n   "+r.link:"")).join("\n")}
 document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const d=b.dataset;
-  if(d.dmside){dmF.side=d.dmside;dmF.n=30;dmSave();render();return}
+  if(d.dmside){navStep(()=>{dmF.side=d.dmside;dmF.n=30;dmSave()});return}
   if(b.id==="dmmore"){dmF.n+=30;render();return}
   if(d.dmsrc){sfQ=d.dmsrc;sfGroup="";location.hash="sourcefinder";return}
   if(b.id==="dmwa"){window.open("https://wa.me/?text="+encodeURIComponent(dmShareText().slice(0,3500)),"_blank");return}
@@ -1400,7 +1434,10 @@ document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&b
 setTimeout(()=>loadFX(),1200);
 
 /* ---------- BOOT ---------- */
+if(history.state&&history.state.g&&history.state.h===cur())navRestore(history.state.g);
 render();
+if(history.state&&history.state.g&&history.state.h===cur()){const st=history.state;navReopen(st.g.open);NAV.bootY=st.y||0;NAV.bootUntil=Date.now()+6000;setTimeout(()=>{if(NAV.bootY)window.scrollTo(0,NAV.bootY)},60); // page data may still be loading: keep trying for a few seconds
+  ["wheel","touchstart","keydown"].forEach(ev=>window.addEventListener(ev,()=>{NAV.bootY=0},{once:true,passive:true}))}
 setTimeout(initCloud,0);
 setTimeout(()=>loadUpdates(false),0);
 window.__GARCHA={dmLadder,dmPrices,get dmC(){return dmC},FX,dmSellRows,dmBuyRows,get dmF(){return dmF},TM,loadTM,tmOpps,get tmF(){return tmF},LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
