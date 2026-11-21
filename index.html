@@ -125,7 +125,7 @@ nav#nav a.on .nbadge{background:#fff;color:var(--red)}
 footer{font-size:12px;color:var(--mut);padding:0 18px 30px;max-width:1400px;margin:0 auto}
 @media (max-width:980px){nav#nav{display:none}#navsel{display:block;max-width:220px}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
 @media (max-width:560px){header{flex-wrap:wrap;padding:8px 12px}#sync{margin-left:0;order:3;width:100%}#navsel{max-width:none;flex:1}main{padding:12px 10px 50px}.grid4,.grid3{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.step p,.step .meta,.step textarea{margin-left:0;width:100%}}
-.tmr{display:flex;align-items:center;gap:10px;padding:8px 2px;border-top:1px solid var(--line)}.tmr:first-of-type{border-top:0}.tmr.hl,.tmol li.hl{background:var(--acc2);border-radius:8px}.tmr .tval{text-align:right;white-space:nowrap;font-size:13px}.tmk>div{display:flex;flex-direction:column;gap:2px;background:var(--acc2);border-radius:10px;padding:10px}.tmk b{font-size:18px}.tmol{margin:6px 0 0 18px;padding:0}.tmt td{vertical-align:top}.dmt td{vertical-align:top}.dmt td,.dmt th{text-align:left!important}.dmt td:first-child{width:52%}.dmd{margin:2px 0 6px}#main .dmd button.link{text-align:left;padding-left:0}#main .tmr button.link,#main .tmt button.link,#main .plain button.link{text-align:left;padding-left:0}
+.tmr{display:flex;align-items:center;gap:10px;padding:8px 2px;border-top:1px solid var(--line)}.tmr:first-of-type{border-top:0}.tmr.hl,.tmol li.hl{background:var(--acc2);border-radius:8px}.tmr .tval{text-align:right;white-space:nowrap;font-size:13px}.tmk>div{display:flex;flex-direction:column;gap:2px;background:var(--acc2);border-radius:10px;padding:10px}.tmk b{font-size:18px}.tmol{margin:6px 0 0 18px;padding:0}.tmt td{vertical-align:top}.dmt td{vertical-align:top}.dmt td,.dmt th{text-align:left!important}.dmt td:first-child{width:52%}.dmd{margin:2px 0 6px}#main .dmd button.link{text-align:left;padding-left:0}.dmprow td{border-top:0!important;padding-top:0!important}.dmp summary{cursor:pointer;color:var(--acc);font-size:13px;padding:4px 0}.dmpl td{padding:5px 6px}.dmpl tr.hl td{background:var(--acc2)}.dmpl td:last-child{text-align:right!important;white-space:nowrap}#main .tmr button.link,#main .tmt button.link,#main .plain button.link{text-align:left;padding-left:0}
 .tex{border-top:1px solid var(--line)}.tex:first-child{border-top:0}.tex summary{display:flex;align-items:center;gap:10px;padding:10px 2px;cursor:pointer;list-style:none}.tex summary::-webkit-details-marker{display:none}
 .trank{min-width:26px;height:26px;border-radius:50%;background:var(--acc2);color:var(--acc);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
 .tname{flex:1;min-width:0}.tbar{display:block;height:7px;background:var(--line);border-radius:5px;margin-top:5px;overflow:hidden}.tbar i{display:block;height:100%;background:linear-gradient(90deg,var(--saffron),var(--acc))}.tbar.imp i{background:linear-gradient(90deg,#2563eb,var(--saffron))}
@@ -136,7 +136,7 @@ footer{font-size:12px;color:var(--mut);padding:0 18px 30px;max-width:1400px;marg
 </style>
 </head>
 <body>
-<header><div class="brand">GARCHA <span>EXIM</span> Navigator <span style="font-size:11px;color:var(--mut)">v8</span><small>Plan exports &amp; imports · who buys &amp; sells · daily rulings &amp; leads</small></div><select id="navsel" aria-label="Go to section"></select><button id="installbtn" class="btn sm" hidden>📲 Install app</button><button id="termsbtn" class="btn sm ghost" title="Show meanings of trade terms on hover/tap">💡 Meanings: On</button><div id="sync"></div></header>
+<header><div class="brand">GARCHA <span>EXIM</span> Navigator <span style="font-size:11px;color:var(--mut)">v9</span><small>Plan exports &amp; imports · who buys &amp; sells · daily rulings &amp; leads</small></div><select id="navsel" aria-label="Go to section"></select><button id="installbtn" class="btn sm" hidden>📲 Install app</button><button id="termsbtn" class="btn sm ghost" title="Show meanings of trade terms on hover/tap">💡 Meanings: On</button><div id="sync"></div></header>
 <div class="wrapm"><nav id="nav" aria-label="Sections"></nav><main id="main"></main></div>
 <footer>Built-in rules confirmed up to 15 Nov 2026; new DGFT &amp; RBI rulings are collected daily on the “Latest Rulings” page. Always open the official notification before acting. General guidance, not legal, tax or financial advice. © Mangeshwar Garcha</footer>
 <script>/* ===== GARCHA EXIM NAVIGATOR — KNOWLEDGE BASE (verified Nov 2026) ===== */
@@ -2191,7 +2191,7 @@ function dmSave(){try{localStorage.setItem("garcha-dm-f",JSON.stringify({side:dm
 /* lead sector (from the notice's product code) → export groups that make it */
 const DM_SECT={"Medical & pharma":"pha","Vehicles & parts":"eng","Electronics & IT":"ele","Lab & instruments":"eng","Furniture & home textiles":"cot,hc","Machinery":"eng","Agri & food":"cer,fv,rice,spi","Electrical":"ele,eng","Construction materials":"cera,eng","Textiles & apparel":"rmg,cot","Security & defence":"eng","Chemicals":"chem","Sports, toys & music":"oth","Minerals & metals":"eng,iron","Paper & printing":"oth","Leather & textiles":"lea,rmg"};
 /* words in a notice title → export groups (English and common EU words) */
-const DM_KW=[["ambulance|vehicle|truck|trailer|semi-trailer|bus\\b|buses\\b|car\\b|cars\\b|motorcycle|tyre\\b|tire\\b|spare part|automo|bicycle","eng"],["medic|pharma|drug|vaccin|syringe|surgical|hospital|diagnost|reagent|bandage|dressing|glove|face mask|ppe\\b|ivd\\b|catheter|implant|orthop|dental|cardiac|radiotherap|operating-theatre","pha"],["tablet computer|tablets|tablettes|laptop|computer|server|printer|video|camera|phone|telecom|network equipment|cctv|surveillance|electronic|ict\\b|it equipment","ele"],["solar|cable|transformer|generator|electric|electro|lighting|lamp\\b|led\\b|battery|batteries|meter\\b","ele"],["pump\\b|valve|machine|machinery|tool\\b|boiler|compressor|crane|engine|bearing|kitchen equipment|appliance","eng"],["laborator|scientific|instrument|microscope|analy[sz]er|chromatograph","eng"],["steel|pipe|iron|alumin|metal|casting|forging|fabricat|fastener","eng"],["rice\\b","rice"],["spice|pepper|turmeric|cumin","spi"],["tea\\b","tea"],["coffee","cof"],["fruit|vegetable|potato|onion|mango|grape|banana","fv"],["food|bakery|bread|biscuit|grocer|flour|cereal|pulse|lentil|dairy|beverage","cer"],["fish\\b|seafood|shrimp|prawn","mar"],["meat\\b|poultry|chicken","meat"],["textile|fabric|garment|uniform|clothing|apparel|workwear|t-shirt|shirt|blanket|bedding|linen|towel|curtain|mattress","rmg,cot"],["footwear|shoe\\b|boot\\b|leather|handbag","lea"],["furniture|chair|desk|wooden|cabinet|shelving","hc,oth"],["carpet|rug\\b","carp"],["chemical|fertili[sz]er|pesticide|detergent|disinfect|paint\\b|cleaning product|soap\\b","chem"],["plastic|polyeth|packaging|container","pla"],["tile\\b|ceramic|sanitary ware|cement|brick","cera"],["jewel|diamond","gem"],["paper|printing|book\\b|stationery|envelope","oth"],["sport|toy\\b|gym|fitness|music","oth"],["jute|sack\\b","jute"]].map(([a,k])=>[new RegExp("\\b(?:"+a+")"),k]);
+const DM_KW=[["ambulance|vehicle|truck|trailer|semi-trailer|bus\\b|buses\\b|car\\b|cars\\b|motorcycle|tyre\\b|tire\\b|spare part|automo|bicycle","eng"],["medic|pharma|drug|vaccin|syringe|surgical|hospital|diagnost|reagent|bandage|dressing|glove|face mask|ppe\\b|ivd\\b|catheter|implant|orthop|dental|cardiac|radiotherap|operating-theatre","pha"],["tablet computer|tablets|tablettes|laptop|computer|server|printer|video|camera|phone|telecom|network equipment|cctv|surveillance|electronic|ict\\b|it equipment","ele"],["solar|cable|transformer|generator|electric|electro|lighting|lamp\\b|led light|led lamp|battery|batteries|meter\\b","ele"],["pump\\b|valve|machine|machinery|tool\\b|boiler|compressor|crane|engine|bearing|kitchen equipment|appliance","eng"],["laborator|scientific|instrument|microscope|analy[sz]er|chromatograph","eng"],["steel|pipe|iron|alumin|metal|casting|forging|fabricat|fastener","eng"],["rice\\b","rice"],["spice|pepper|turmeric|cumin","spi"],["tea\\b","tea"],["coffee","cof"],["fruit|vegetable|potato|onion|mango|grape|banana","fv"],["food|bakery|bread|biscuit|grocer|flour|cereal|pulse|lentil|dairy|beverage","cer"],["fish\\b|seafood|shrimp|prawn","mar"],["meat\\b|poultry|chicken","meat"],["textile|fabric|garment|uniform|clothing|apparel|workwear|t-shirt|shirt|blanket|bedding|linen|towel|curtain|mattress","rmg,cot"],["footwear|shoe\\b|boot\\b|leather|handbag","lea"],["furniture|chair|desk|wooden|cabinet|shelving","hc,oth"],["carpet|rug\\b","carp"],["chemical|fertili[sz]er|pesticide|detergent|disinfect|paint\\b|cleaning product|soap\\b","chem"],["plastic|polyeth|packaging|container","pla"],["tile\\b|ceramic|sanitary ware|cement|brick","cera"],["jewel|diamond","gem"],["paper|printing|book\\b|stationery|envelope","oth"],["sport|toy\\b|gym|fitness|music","oth"],["jute|sack\\b","jute"]].map(([a,k])=>[new RegExp("\\b(?:"+a+")"),k]);
 const DM_STOP=new Set("supply delivery supplies procurement purchase acquisition provision various related products product services service goods other equipment lot lots for and the with from into year years framework agreement contract tender national public works natural miscellaneous misc item items special purpose unit units device devices system systems article articles accessory accessories part parts material materials set sets type types hand general industrial".split(" "));
 function dmWords(t){return [...new Set(String(t).toLowerCase().split(/[^a-z]+/).filter(w=>w.length>3&&!DM_STOP.has(w)).map(w=>w.replace(/(ies)$/,"y").replace(/s$/,"")))]}
 function dmEnglish(l){const t=String(l.title||"");return (l.src==="ted"?t.split(" – ")[0]:t).trim()}
@@ -2214,16 +2214,18 @@ function dmSellRows(){const rows=[],today=new Date().toISOString().slice(0,10);
   (LEADS.items||[]).forEach(l=>{if(l.deadline&&l.deadline<today)return;if(/Services|Software|Fuels/.test(l.sector||""))return;
     const en=dmEnglish(l);if(/consult|services? for|workshop|training|audit|insurance|hosting|licen[cs]e|cpanel|study\b|survey|design and supervision|gravel|sand\b|crushed stone|asphalt|electricity|natural gas|water supply|fuel/i.test(en))return;
     const g=dmGroups(en,l.sector);if(!g.length)return;const ds=dmDistricts(g,dmWords(en));if(!ds.length)return;
-    rows.push({kind:l.kind==="Tender"?"Tender":"Buyer news",what:en,where:[l.buyer,l.country].filter(Boolean).join(", "),when:l.deadline,link:l.link,g,ds,src:"lead"})});
+    const c=dmCode(l.country);
+    rows.push({kind:l.kind==="Tender"?"Tender":"Buyer news",what:en,where:[l.buyer,l.country].filter(Boolean).join(", "),when:l.deadline,link:l.link,g,ds,src:"lead",tender:l.kind==="Tender",p:dmProductFor(en,g),c,iso:c&&TM.d?(TM.d.countries[c]||[])[1]:""})});
   if(TM.d)tmOpps().forEach(o=>{const b=o.b,p=o.p;const ds=dmDistricts(p.grp.split(","),dmWords(p.name+" "+(p.kw||"").replace(/,/g," ")));
-    rows.push({kind:"Market gap",what:p.name,where:tmCN(b[0])+" — buys "+tmUSD(b[1])+" a year, under 5% from India",when:"",link:"",hs:p.hs,c:b[0],g:[p.grp],ds,src:"gap",val:b[1]})});
+    rows.push({kind:"Market gap",what:p.name,where:tmCN(b[0])+" — buys "+tmUSD(b[1])+" a year, under 5% from India",when:"",link:"",hs:p.hs,c:b[0],g:[p.grp],ds,src:"gap",val:b[1],p,iso:(TM.d.countries[b[0]]||[])[1]})});
   return rows}
 function dmBuyRows(){const rows=[];
   IMPORT_GROUPS.forEach(g=>{const p=TM.d&&TM.d.products.find(x=>x.dir==="M"&&x.grp===g[0]);
     const now=String(g[4]).split(/,\s*/).filter(Boolean).slice(0,4);
     const world=p?p.sellers.filter(s=>s[0]!==699).slice(0,4).map(s=>tmCN(s[0])+(tmPerKg(s[1],s[2])?" ("+tmPerKg(s[1],s[2])+")":"")):[];
     const bodies=[...new Set(now.concat(p?p.sellers.slice(0,4).map(s=>tmCN(s[0])):[]))].map(c=>[c,(FOREIGN_BODIES[c]||[])[0]]).filter(x=>x[1]).slice(0,3);
-    rows.push({what:g[1],need:g[3],now,world,bodies,caution:g[6],grp:g[0],hs:p?p.hs:""})});
+    const fr=p?p.indiaFrom.reduce((a,x)=>[a[0]+x[1],a[1]+(x[2]||0)],[0,0]):[0,0];
+    rows.push({what:g[1],need:g[3],now,world,bodies,caution:g[6],grp:g[0],hs:p?p.hs:"",pay:fr[1]>0&&fr[0]/fr[1]<500?fr[0]/fr[1]:0})});
   return rows.sort((a,b)=>b.need-a.need)}
 function dmProcure(ds,g){const eg=g.map(k=>EG[k]).filter(Boolean)[0];
   return ds.map(d=>'<div class="dmd"><button class="link" data-dmsrc="'+esc(d.name.replace(/\s*\(.*\)/,""))+'">📍 <b>'+esc(d.name)+'</b>, '+esc(d.st)+'</button><br><span class="small muted">'+esc(d.prod)+'</span></div>').join("")+
@@ -2235,35 +2237,37 @@ V.demand=function(){
   let h='<div class="card"><h2>🔗 Sell & Source — who wants what, and where to get it</h2><p class="small muted">Each line: <b>what is wanted</b> and <b>where</b>, and in front of it <b>where you can procure it</b>. Demand comes from live tenders and buyer news (updated twice a day) and from countries that buy a lot but take little from India (Trade Map). Sources in India come from the district list (Source by State/City).</p>'+
    '<div class="seg mt">'+[["sell","Sell abroad: demand → procure in India"],["buy","Buy abroad: India’s needs → procure from"]].map(x=>'<button data-dmside="'+x[0]+'" class="'+(dmF.side===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div>'+
    '<div class="row gap wrap mt"><input id="dmq" placeholder="Filter: rice, Germany, medicines…" value="'+esc(dmF.q)+'" style="flex:1;min-width:200px">'+
-   (dmF.side==="sell"?'<select id="dmsrc"><option value="all"'+(dmF.src==="all"?" selected":"")+'>All demand</option><option value="lead"'+(dmF.src==="lead"?" selected":"")+'>Live tenders & buyer news</option><option value="gap"'+(dmF.src==="gap"?" selected":"")+'>Big buying countries (gaps)</option></select><label class="small"><input type="checkbox" id="dmmine"'+(dmF.mine?" checked":"")+'> Only my products</label>':'')+'</div></div>';
+   (dmF.side==="sell"?'<select id="dmsrc"><option value="all"'+(dmF.src==="all"?" selected":"")+'>All demand</option><option value="lead"'+(dmF.src==="lead"?" selected":"")+'>Live tenders & buyer news</option><option value="gap"'+(dmF.src==="gap"?" selected":"")+'>Big buying countries (gaps)</option></select><label class="small"><input type="checkbox" id="dmmine"'+(dmF.mine?" checked":"")+'> Only my products</label><label class="small"><input type="checkbox" id="dmcollect"'+(dmC.collect?" checked":"")+'> Buyers who collect from my warehouse first</label>':'')+'</div></div>'+(dmF.side==="sell"?dmCostCard():"");
   if(dmF.side==="sell"){
     let rows=dmSellRows().filter(r=>dmF.src==="all"||r.src===dmF.src);
     if(q)rows=rows.filter(r=>(r.what+" "+r.where+" "+r.ds.map(d=>d.name+" "+d.st+" "+d.prod).join(" ")).toLowerCase().includes(q));
     if(mw.length)rows=rows.filter(r=>mw.some(w=>(r.what+" "+r.ds.map(d=>d.prod).join(" ")).toLowerCase().includes(w)));
     const hit=r=>q&&r.what.toLowerCase().includes(q)?0:1; // when filtering, lines whose wanted item matches come first
-    rows.sort((a,b)=>(hit(a)-hit(b))||(a.src===b.src?0:a.src==="lead"?-1:1)||((a.when||"9")<(b.when||"9")?-1:(a.when||"9")>(b.when||"9")?1:0)||((b.val||0)-(a.val||0)));
+    const col=r=>!dmC.collect?0:r.src==="gap"?0:r.tender?2:1; // trade buyers who can collect from your warehouse first, tenders (delivery needed) last
+    rows.sort((a,b)=>(hit(a)-hit(b))||(col(a)-col(b))||(a.src===b.src?0:a.src==="lead"?-1:1)||((a.when||"9")<(b.when||"9")?-1:(a.when||"9")>(b.when||"9")?1:0)||((b.val||0)-(a.val||0)));
     if(dmF.mine&&!mw.length)h+='<div class="card note small">“Only my products” needs your products: add them on the Dashboard profile (Product) or make a plan in the Trade Planner.</div>';
     if(!rows.length)return h+'<div class="card empty">'+((LEADS.loading||TM.loading)?"Loading demand…":"Nothing matches. Clear the filter or untick “Only my products”.")+'</div>';
     const shown=rows.slice(0,dmF.n);
     h+='<div class="card"><div class="row sb wrap gap"><span class="small"><b>'+rows.length+'</b> lines</span><button class="btn sm ghost" id="dmwa">Share on WhatsApp</button></div>'+
      '<table class="tbl res dmt"><tr><th>What is wanted · where</th><th>Procure it from (India)</th></tr>'+shown.map(r=>{const dl=dmDays(r.when);
-      return '<tr><td><span class="pill '+(r.src==="gap"?"amber":"green")+'">'+esc(r.kind)+'</span> <b>'+esc(r.what)+'</b><br><span class="small">🌍 '+esc(r.where)+'</span>'+(dl!=null?'<br><span class="small '+(dl<=7?"down":"muted")+'">⏳ closes '+showD(parseD(r.when))+' ('+dl+' days)</span>':'')+
-       '<div class="row gap wrap mt">'+(r.link?'<a class="btn sm ghost" href="'+esc(r.link)+'" target="_blank" rel="noopener">Open notice</a>':'')+(r.src==="gap"?'<button class="btn sm ghost" data-tmplan="'+r.hs+'" data-tmc="'+r.c+'">Plan</button><button class="btn sm ghost" data-tmgo="'+r.hs+'">Trade Map</button>':'')+'</div></td><td>'+dmProcure(r.ds,r.g)+'</td></tr>'}).join("")+'</table>'+
+      return '<tr><td><span class="pill '+(r.src==="gap"?"amber":"green")+'">'+esc(r.kind)+'</span> '+(r.tender?'<span class="pill red" title="Public tenders need delivery to the buyer’s address">🚚 You deliver</span>':'<span class="pill" title="Trade buyers can send their own forwarder to collect">🏭 Can collect FCA</span>')+'<br><b>'+esc(r.what)+'</b><br><span class="small">🌍 '+esc(r.where)+'</span>'+(dl!=null?'<br><span class="small '+(dl<=7?"down":"muted")+'">⏳ closes '+showD(parseD(r.when))+' ('+dl+' days)</span>':'')+
+       '<div class="row gap wrap mt">'+(r.link?'<a class="btn sm ghost" href="'+esc(r.link)+'" target="_blank" rel="noopener">Open notice</a>':'')+(r.src==="gap"?'<button class="btn sm ghost" data-tmplan="'+r.hs+'" data-tmc="'+r.c+'">Plan</button><button class="btn sm ghost" data-tmgo="'+r.hs+'">Trade Map</button>':'')+'</div></td><td>'+dmProcure(r.ds,r.g)+'</td></tr><tr class="dmprow"><td colspan="2">'+dmPriceBlock(r)+'</td></tr>'}).join("")+'</table>'+
      (rows.length>dmF.n?'<button class="btn ghost mt" id="dmmore">Show 30 more</button>':'')+'</div>';
+    h+='<div class="card note small">🏭 <b>Buyer collects from your warehouse:</b> quote <b>FCA (your warehouse)</b>, not EXW. Under FCA you still clear export customs and file the shipping bill (needed for RoDTEP, GST refund and export proof), and the buyer’s forwarder picks up the goods. Trade buyers (importers, distributors — the “Market gap” and buyer-news lines) can usually agree this; public tenders want delivery to their address.</div>';
     h+='<div class="card note small">⚠️ Tenders: read the notice for who may bid (many EU tenders accept foreign bidders, often with an EU partner). Buyer news: verify the company before sending samples or prices — genuine buyers never ask for a registration fee. Suppliers: visit or video-call the unit, take a sample and check GST/Udyam registration before you pay.</div>';
     return h;
   }
   let rows=dmBuyRows();if(q)rows=rows.filter(r=>(r.what+" "+r.now.join(" ")+" "+r.world.join(" ")).toLowerCase().includes(q));
   h+='<div class="card"><div class="row sb wrap gap"><span class="small"><b>'+rows.length+'</b> things India imports most (FY 2025-26)</span><button class="btn sm ghost" id="dmwa">Share on WhatsApp</button></div><table class="tbl res dmt"><tr><th>What India needs</th><th>Procure it from (abroad)</th></tr>'+rows.map(r=>
     '<tr><td><b>'+esc(r.what)+'</b><br><span class="small">India imported '+usd(r.need)+' in FY 2025-26</span>'+(r.caution?'<br><span class="small muted">⚠️ '+esc(r.caution)+'</span>':'')+'<div class="row gap wrap mt"><button class="btn sm ghost" data-wiplan="'+r.grp+'">Plan import</button>'+(r.hs?'<button class="btn sm ghost" data-tmgo="'+r.hs+'">Trade Map</button>':'')+'</div></td>'+
-    '<td><div class="dmd">🇮🇳 <b>India buys now from:</b> '+esc(r.now.join(", "))+'</div>'+(r.world.length?'<div class="dmd">🏭 <b>Biggest world sellers:</b> '+esc(r.world.join(", "))+'</div>':'')+
+    '<td><div class="dmd">🇮🇳 <b>India buys now from:</b> '+esc(r.now.join(", "))+'</div>'+(r.pay?'<div class="dmd">💵 <b>India pays on average:</b> '+dmMoney(r.pay,usdInr())+'/kg CIF, before Indian duty</div>':'')+(r.world.length?'<div class="dmd">🏭 <b>Biggest world sellers:</b> '+esc(r.world.join(", "))+'</div>':'')+
     (r.bodies.length?'<div class="small">🤝 '+r.bodies.map(([c,b])=>'<a href="'+esc(b[1])+'" target="_blank" rel="noopener">'+esc(b[0].split(" – ")[0])+'</a> ('+esc(c)+')').join(" · ")+'</div>':'')+'</td></tr>').join("")+'</table></div>';
   return h;
 };
 function dmShareText(){
   if(dmF.side==="buy")return "What India imports & where to procure it — GARCHA EXIM Navigator\n\n"+dmBuyRows().slice(0,15).map((r,i)=>(i+1)+". "+r.what+" — buy from: "+r.now.join(", ")).join("\n");
   const rows=dmSellRows().filter(r=>dmF.src==="all"||r.src===dmF.src).filter(r=>!dmF.q||(r.what+" "+r.where).toLowerCase().includes(dmF.q.toLowerCase())).slice(0,15);
-  return "Who wants what & where to procure it in India — GARCHA EXIM Navigator\n\n"+rows.map((r,i)=>(i+1)+". "+r.what+" — "+r.where+(r.when?" (closes "+r.when+")":"")+"\n   Procure: "+r.ds.map(d=>d.name+", "+d.st).join("; ")+(r.link?"\n   "+r.link:"")).join("\n")}
+  return "Who wants what & where to procure it in India — GARCHA EXIM Navigator\n\n"+rows.map((r,i)=>(i+1)+". "+r.what+" — "+r.where+(r.when?" (closes "+r.when+")":"")+"\n   Procure: "+r.ds.map(d=>d.name+", "+d.st).join("; ")+(()=>{const L=r.p&&dmLadder(r.p,r.c,r.iso);return L?"\n   Per kg: buy ≤ ₹"+(L.procure*L.R).toFixed(0)+" · FCA warehouse ₹"+(L.fca*L.R).toFixed(0)+" · FOB ₹"+(L.fob*L.R).toFixed(0)+(L.pr.cif?" · buyer pays ~₹"+(L.pr.cif*L.R).toFixed(0)+" CIF":""):""})()+(r.link?"\n   "+r.link:"")).join("\n")}
 document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const d=b.dataset;
   if(d.dmside){dmF.side=d.dmside;dmF.n=30;dmSave();render();return}
   if(b.id==="dmmore"){dmF.n+=30;render();return}
@@ -2276,11 +2280,79 @@ document.addEventListener("change",e=>{const t=e.target;
 });
 document.addEventListener("input",e=>{const t=e.target;if(t.id==="dmq"){dmF.q=t.value;dmF.n=30;render()}});
 
+/* ===== v9: PRICES & COSTS ON SELL & SOURCE (FCA warehouse → FOB → CIF; buyer's market price) ===== */
+let FX={d:null};
+async function loadFX(){try{const d=await getJSON("fx.json");if(d&&d.inrPer&&d.inrPer.USD){FX.d=d;try{localStorage.setItem("garcha-fx",JSON.stringify(d))}catch(e){}}}catch(e){try{FX.d=JSON.parse(localStorage.getItem("garcha-fx")||"null")}catch(_){}}render()}
+const usdInr=()=>FX.d&&FX.d.inrPer&&FX.d.inrPer.USD?FX.d.inrPer.USD:num(((S.calc||{}).ex||{}).rate)||88;
+/* rough freight per 20-ft container from West India, US$ — starting values only; replace with your forwarder's quote */
+const DM_REG=[["gulf","Gulf & Middle East",400,"AE SA OM QA KW BH IR IQ JO IL YE LB SY"],["sasia","South Asia",300,"BD LK NP PK MV BT AF"],["asia","East & South-East Asia",400,"CN HK TW JP KR SG MY TH VN ID PH MM KH BN MO LA MN"],["eur","Europe & UK",1200,"GB IE FR DE NL BE LU ES PT IT GR AT CH DK SE NO FI IS PL CZ SK HU RO BG HR SI RS BA ME MK AL LT LV EE CY MT UA MD BY RU TR GE AM AZ"],["nam","USA & Canada",2000,"US CA MX"],["lat","Latin America",2500,"BR AR CL PE CO EC UY PY BO VE GT HN SV NI CR PA DO HT CU JM TT BS GY SR"],["afr","Africa",1500,"EG MA DZ TN LY SD SS ET KE TZ UG RW BI DJ SO ZA NA BW ZW ZM MW MZ AO CD CG GA CM NG GH CI SN ML BF NE TD GM GN GW SL LR TG BJ MR MG MU SC LS SZ"],["oce","Australia & Pacific",1500,"AU NZ PG FJ VU FM NR"]];
+const DM_OPEN=new Set(); // price boxes the user opened stay open after a re-render
+document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.dataset&&d.dataset.dmk){if(d.open)DM_OPEN.add(d.dataset.dmk);else DM_OPEN.delete(d.dataset.dmk)}},true);
+let dmC={kg:18000,inland:15000,port:8000,clear:7000,bank:0.8,ins:0.2,margin:10,fr:{},buy:{},kgp:{},collect:true};
+try{const o=JSON.parse(localStorage.getItem("garcha-dm-cost")||"{}");dmC=Object.assign(dmC,o)}catch(e){}
+DM_REG.forEach(r=>{if(dmC.fr[r[0]]==null)dmC.fr[r[0]]=r[2]});
+function dmCSave(){try{localStorage.setItem("garcha-dm-cost",JSON.stringify(dmC))}catch(e){}}
+function dmRegion(iso){iso=String(iso||"").toUpperCase();const r=DM_REG.find(x=>(" "+x[3]+" ").includes(" "+iso+" "));return r||DM_REG[3]}
+const DM_CN_ALIAS={"czech republic":"czechia","turkey":"türkiye","united states":"usa","united states of america":"usa","uk":"united kingdom","korea":"south korea","republic of korea":"south korea","viet nam":"vietnam","russian federation":"russia","netherlands (the)":"netherlands"};
+function dmCode(name){if(!TM.d||!name)return 0;let n=String(name).toLowerCase().trim();n=DM_CN_ALIAS[n]||n;for(const [c,v] of Object.entries(TM.d.countries))if(String(v[0]).toLowerCase()===n)return +c;return 0}
+/* the Trade Map product a notice is about — only when its words clearly name it */
+const DM_GENERIC=new Set("food,chemical,garment,apparel,clothing,plastic,steel,electrical,medicine,pharma,drug,tablet,machine,machinery,vehicle,automotive,auto parts,fruit,vegetable,marine,meat,ready,snack,feed,extract,decor,fitness,sports,telecom,mobile,phone,fuel,spice,seed,leather,bag,api,intermediate,beauty,linen,home textile,fabrication,valve,tap".split(","));
+const DM_NOKG=new Set(["3004","3002","2933","8517","8504","8481","8708","7113","7102","9506","4202","6403","3304"]); // per-kg price misleads for these
+function dmProductFor(text,groups){if(!TM.d)return null;const t=" "+String(text).toLowerCase()+" ";
+  return TM.d.products.find(p=>p.dir==="X"&&groups.includes(p.grp)&&String(p.kw||"").split(",").some(k=>k.trim().length>2&&!DM_GENERIC.has(k.trim())&&new RegExp("\\b"+k.trim().replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).test(t)))||null}
+/* average prices from customs records (US$/kg); null when the code mixes very different goods */
+function dmPrices(p,c){if(!p||DM_NOKG.has(p.hs))return null;
+  const sv=l=>l.reduce((a,x)=>[a[0]+x[1],a[1]+(x[2]||0)],[0,0]);
+  const iT=p.indiaTo.find(x=>x[0]===c),iAll=sv(p.indiaTo);
+  const fob=iT&&iT[2]>0?iT[1]/iT[2]:(iAll[1]>0?iAll[0]/iAll[1]:0);
+  const b=p.buyers.find(x=>x[0]===c);const bw=p.buyers.reduce((a,x)=>[a[0]+x[1],a[1]+(x[3]||0)],[0,0]);
+  const cif=b&&b[3]>0?b[1]/b[3]:(bw[1]>0?bw[0]/bw[1]:0);
+  if(!(fob>0)||fob>=500)return null;
+  return {fob,fobHere:!!(iT&&iT[2]>0),cif:cif>0&&cif<500?cif:0,cifHere:!!(b&&b[3]>0)}}
+function dmLadder(p,c,iso){const pr=dmPrices(p,c);if(!pr)return null;const R=usdInr(),kg=Math.max(100,num(dmC.kgp[p.hs]||dmC.kg));
+  const reg=dmRegion(iso),frK=num(dmC.fr[reg[0]])/kg;
+  const own=num(dmC.buy[p.hs]); // ₹/kg the user can buy at (optional)
+  let fca,fob,procure;
+  if(own>0){fca=(own/R*(1+dmC.margin/100)+dmC.clear/kg/R)/(1-dmC.bank/100);fob=fca+(dmC.inland+dmC.port)/kg/R;procure=own/R}
+  else{fob=pr.fob;fca=fob-(dmC.inland+dmC.port)/kg/R;procure=(fca*(1-dmC.bank/100)-dmC.clear/kg/R)/(1+dmC.margin/100)}
+  const insK=(fob+frK)*dmC.ins/100,cif=fob+frK+insK;
+  return {pr,R,kg,reg,frK,insK,own:own>0,procure,fca,fob,cif}}
+function dmMoney(usd,R){return "₹"+(usd*R).toLocaleString("en-IN",{maximumFractionDigits:usd*R<100?1:0})+'<span class="small muted"> (US$ '+(usd<1?usd.toFixed(3):usd.toFixed(2))+')</span>'}
+function dmPriceBlock(r){if(!r.p)return '<p class="small muted">💰 No price data for this item (the notice does not name a tracked product). Ask suppliers for a quote.</p>';
+  const L=dmLadder(r.p,r.c,r.iso);if(!L)return '<p class="small muted">💰 Per-kg prices are not meaningful for '+esc(tmShort(r.p.name))+' (very mixed goods) — price per piece from supplier quotes.</p>';
+  const cn=r.c?tmCN(r.c):"buyers", gap=L.pr.cif?(L.pr.cif-L.cif)/L.cif*100:null;
+  const verdict=gap==null?"":gap>10?'<span class="up">room to price higher (+'+gap.toFixed(0)+'%)</span>':gap<-10?'<span class="down">your price is above the market ('+gap.toFixed(0)+'%) — check grade or cut costs</span>':'<span>in line with the market</span>';
+  const k=r.p.hs+"_"+(r.c||0);
+  return '<details class="dmp" data-dmk="'+k+'"'+(DM_OPEN.has(k)?" open":"")+'><summary>💰 Price & costs per kg'+(L.pr.cif?' · '+cn+' pays ~'+dmMoney(L.pr.cif,L.R).replace(/<[^>]+>/g,"").split(" (")[0]+'/kg':'')+'</summary>'+
+   '<table class="tbl dmpl"><tr><td>'+(L.own?'Your buying price':'<b>Buy from supplier at most</b><br><span class="small muted">to sell at India’s average export price, keeping '+dmC.margin+'% margin</span>')+'</td><td><b>'+dmMoney(L.procure,L.R)+'</b></td></tr>'+
+   '<tr><td>+ your margin ('+dmC.margin+'%), export clearance (CHA, docs, certificates), bank & ECGC</td><td class="small">'+dmMoney(L.fca-L.procure,L.R)+'</td></tr>'+
+   '<tr class="hl"><td><b>🏭 FCA your warehouse</b><br><span class="small muted">buyer’s forwarder collects; you file the shipping bill</span></td><td><b>'+dmMoney(L.fca,L.R)+'</b></td></tr>'+
+   '<tr><td>+ truck to port & port/terminal charges</td><td class="small">'+dmMoney((L.fob-L.fca),L.R)+'</td></tr>'+
+   '<tr><td><b>⚓ FOB Indian port</b><br><span class="small muted">'+(L.own?'from your buying price':(L.pr.fobHere?'India’s average export price to '+esc(cn):'India’s average export price (all countries)'))+'</span></td><td><b>'+dmMoney(L.fob,L.R)+'</b></td></tr>'+
+   '<tr><td>+ sea freight to '+esc(L.reg[1])+' (US$ '+num(dmC.fr[L.reg[0]]).toLocaleString("en-IN")+' per 20-ft ÷ '+L.kg.toLocaleString("en-IN")+' kg) & insurance</td><td class="small">'+dmMoney(L.frK+L.insK,L.R)+'</td></tr>'+
+   '<tr><td><b>🚢 CIF buyer’s port (estimate)</b></td><td><b>'+dmMoney(L.cif,L.R)+'</b></td></tr>'+
+   (L.pr.cif?'<tr class="hl"><td><b>🌍 '+esc(cn)+' pays on average</b><br><span class="small muted">'+(L.pr.cifHere?'its import price from all suppliers, CIF':'world average import price, CIF')+', before its import duty</span></td><td><b>'+dmMoney(L.pr.cif,L.R)+'</b><br>'+verdict+'</td></tr>':'')+
+   '</table><div class="row gap wrap mt small"><label class="f"><span>My buying price ₹/kg</span><input type="number" min="0" step="any" data-dmbuy="'+r.p.hs+'" value="'+(dmC.buy[r.p.hs]||"")+'" placeholder="supplier quote"></label><label class="f"><span>kg per 20-ft container</span><input type="number" min="100" step="100" data-dmkgp="'+r.p.hs+'" value="'+(dmC.kgp[r.p.hs]||"")+'" placeholder="'+dmC.kg+'"></label></div>'+
+   '<p class="small muted">Averages from customs records ('+r.p.year+', all grades of HS '+r.p.hs+'), ₹ at '+L.R.toFixed(2)+'/US$. The buyer also pays its import duty and local costs. Freight is a rough starting value — use your forwarder’s quote in “Cost settings”.</p></details>'}
+function dmCostCard(){return '<details class="card"><summary><b>⚙️ Cost settings</b> <span class="small muted">— shipment size, local charges, margin, freight by region (₹ '+usdInr().toFixed(2)+'/US$'+(FX.d?' · rate of '+esc(String(FX.d.date||"").slice(5,16)):'')+')</span></summary>'+
+  '<div class="grid3 mt">'+[["kg","kg per 20-ft container (default)"],["inland","Truck to port, ₹ per container"],["port","Port & terminal charges, ₹"],["clear","CHA, docs & certificates, ₹"],["bank","Bank + ECGC, % of value"],["ins","Insurance, % of value"],["margin","Your margin, %"]].map(([k,l])=>'<label class="f"><span>'+l+'</span><input type="number" min="0" step="any" data-dmc="'+k+'" value="'+dmC[k]+'"></label>').join("")+'</div>'+
+  '<h3 class="mt">Sea freight per 20-ft container from West India (US$)</h3><p class="small muted">Starting values only — rates swing a lot month to month. Put in your forwarder’s quote.</p><div class="grid3">'+DM_REG.map(r=>'<label class="f"><span>'+r[1]+'</span><input type="number" min="0" step="50" data-dmfr="'+r[0]+'" value="'+dmC.fr[r[0]]+'"></label>').join("")+'</div>'+
+  '<button class="btn sm ghost mt" id="dmcreset">Reset to starting values</button></details>'}
+document.addEventListener("change",e=>{const t=e.target,d=t.dataset;
+  if(d.dmc){dmC[d.dmc]=Math.max(0,num(t.value));dmCSave();render();return}
+  if(d.dmfr){dmC.fr[d.dmfr]=Math.max(0,num(t.value));dmCSave();render();return}
+  if(d.dmbuy){const v=num(t.value);if(v>0)dmC.buy[d.dmbuy]=v;else delete dmC.buy[d.dmbuy];dmCSave();render();return}
+  if(d.dmkgp){const v=num(t.value);if(v>=100)dmC.kgp[d.dmkgp]=v;else delete dmC.kgp[d.dmkgp];dmCSave();render();return}
+  if(t.id==="dmcollect"){dmC.collect=t.checked;dmCSave();render();return}
+});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(b&&b.id==="dmcreset"){const keep={buy:dmC.buy,kgp:dmC.kgp,collect:dmC.collect};dmC=Object.assign({kg:18000,inland:15000,port:8000,clear:7000,bank:0.8,ins:0.2,margin:10,fr:{}},keep);DM_REG.forEach(r=>dmC.fr[r[0]]=r[2]);dmCSave();render()}});
+setTimeout(()=>loadFX(),1200);
+
 /* ---------- BOOT ---------- */
 render();
 setTimeout(initCloud,0);
 setTimeout(()=>loadUpdates(false),0);
-window.__GARCHA={dmSellRows,dmBuyRows,get dmF(){return dmF},TM,loadTM,tmOpps,get tmF(){return tmF},LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
+window.__GARCHA={dmLadder,dmPrices,get dmC(){return dmC},FX,dmSellRows,dmBuyRows,get dmF(){return dmF},TM,loadTM,tmOpps,get tmF(){return tmF},LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
 })();
 </script>
 </body>

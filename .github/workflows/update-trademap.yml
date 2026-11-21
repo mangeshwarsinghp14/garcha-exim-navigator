@@ -31,11 +31,14 @@ jobs:
         env:
           TM_ALL: ${{ github.event.inputs.all == 'true' && '1' || '' }}
         run: node scripts/fetch-trademap.mjs
+      - name: Exchange rates (free, no key)
+        continue-on-error: true
+        run: node scripts/fetch-fx.mjs
       - name: Save changes
         run: |
           git config user.name "garcha-exim-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/trademap.json data/trademap-status.json
+          git add data/trademap.json data/trademap-status.json data/fx.json
           if git diff --cached --quiet; then echo "No changes"; exit 0; fi
           git commit -m "Trade Map update $(date -u +%Y-%m-%d)"
           git pull --rebase --autostash || true
