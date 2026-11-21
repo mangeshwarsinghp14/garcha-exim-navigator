@@ -1,15 +1,10 @@
 {
- "checkedAt": "2026-11-21T10:39:55.097Z",
+ "checkedAt": "2026-11-21T11:48:11.742Z",
  "year": 2024,
- "products": 25,
- "refreshed": 25,
- "tried": 66,
- "calls": 204,
- "fails": 1,
- "errors": [
-  [
-   "5701",
-   "HTTP 403 { \"statusCode\": 403, \"message\": \"Out of call volume quota. Quota will be replenished in 00:20:05.\" }"
-  ]
- ]
+ "products": 45,
+ "refreshed": 20,
+ "tried": 20,
+ "calls": 162,
+ "fails": 0,
+ "errors": []
 }
