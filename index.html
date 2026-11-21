@@ -125,6 +125,7 @@ nav#nav a.on .nbadge{background:#fff;color:var(--red)}
 footer{font-size:12px;color:var(--mut);padding:0 18px 30px;max-width:1400px;margin:0 auto}
 @media (max-width:980px){nav#nav{display:none}#navsel{display:block;max-width:220px}.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
 @media (max-width:560px){header{flex-wrap:wrap;padding:8px 12px}#sync{margin-left:0;order:3;width:100%}#navsel{max-width:none;flex:1}main{padding:12px 10px 50px}.grid4,.grid3{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.step p,.step .meta,.step textarea{margin-left:0;width:100%}}
+.tmr{display:flex;align-items:center;gap:10px;padding:8px 2px;border-top:1px solid var(--line)}.tmr:first-of-type{border-top:0}.tmr.hl,.tmol li.hl{background:var(--acc2);border-radius:8px}.tmr .tval{text-align:right;white-space:nowrap;font-size:13px}.tmk>div{display:flex;flex-direction:column;gap:2px;background:var(--acc2);border-radius:10px;padding:10px}.tmk b{font-size:18px}.tmol{margin:6px 0 0 18px;padding:0}.tmt td{vertical-align:top}#main .tmr button.link,#main .tmt button.link,#main .plain button.link{text-align:left;padding-left:0}
 .tex{border-top:1px solid var(--line)}.tex:first-child{border-top:0}.tex summary{display:flex;align-items:center;gap:10px;padding:10px 2px;cursor:pointer;list-style:none}.tex summary::-webkit-details-marker{display:none}
 .trank{min-width:26px;height:26px;border-radius:50%;background:var(--acc2);color:var(--acc);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
 .tname{flex:1;min-width:0}.tbar{display:block;height:7px;background:var(--line);border-radius:5px;margin-top:5px;overflow:hidden}.tbar i{display:block;height:100%;background:linear-gradient(90deg,var(--saffron),var(--acc))}.tbar.imp i{background:linear-gradient(90deg,#2563eb,var(--saffron))}
@@ -135,7 +136,7 @@ footer{font-size:12px;color:var(--mut);padding:0 18px 30px;max-width:1400px;marg
 </style>
 </head>
 <body>
-<header><div class="brand">GARCHA <span>EXIM</span> Navigator <span style="font-size:11px;color:var(--mut)">v6</span><small>Plan any export/import · rulings, buyer leads &amp; tenders updated daily</small></div><select id="navsel" aria-label="Go to section"></select><button id="installbtn" class="btn sm" hidden>📲 Install app</button><button id="termsbtn" class="btn sm ghost" title="Show meanings of trade terms on hover/tap">💡 Meanings: On</button><div id="sync"></div></header>
+<header><div class="brand">GARCHA <span>EXIM</span> Navigator <span style="font-size:11px;color:var(--mut)">v7</span><small>Plan exports &amp; imports · who buys &amp; sells · daily rulings &amp; leads</small></div><select id="navsel" aria-label="Go to section"></select><button id="installbtn" class="btn sm" hidden>📲 Install app</button><button id="termsbtn" class="btn sm ghost" title="Show meanings of trade terms on hover/tap">💡 Meanings: On</button><div id="sync"></div></header>
 <div class="wrapm"><nav id="nav" aria-label="Sections"></nav><main id="main"></main></div>
 <footer>Built-in rules confirmed up to 15 Nov 2026; new DGFT &amp; RBI rulings are collected daily on the “Latest Rulings” page. Always open the official notification before acting. General guidance, not legal, tax or financial advice. © Mangeshwar Garcha</footer>
 <script>/* ===== GARCHA EXIM NAVIGATOR — KNOWLEDGE BASE (verified Nov 2026) ===== */
@@ -1018,7 +1019,7 @@ async function initCloud(){
 
 /* ---------- ROUTING ---------- */
 const VIEWS=[
- ["dashboard","Dashboard","◉"],["updates","Latest Rulings & Updates","📰"],["leads","Buyer Leads & Tenders","🤝"],["topexports","Top Exports from India","📈"],["sourcefinder","Source by State / City","📍"],["whatimport","What to Import & From Where","📦"],["prep","Before You Start (checklist)","🧰"],["planner","Trade Planner (flowchart)","🧭"],["roadmap","Step-by-step Roadmap","➜"],["shipments","Shipment Tracker","⛴"],["todo","Pending Tasks","☑"],
+ ["dashboard","Dashboard","◉"],["updates","Latest Rulings & Updates","📰"],["leads","Buyer Leads & Tenders","🤝"],["trademap","Trade Map: who buys & sells","🗺"],["topexports","Top Exports from India","📈"],["sourcefinder","Source by State / City","📍"],["whatimport","What to Import & From Where","📦"],["prep","Before You Start (checklist)","🧰"],["planner","Trade Planner (flowchart)","🧭"],["roadmap","Step-by-step Roadmap","➜"],["shipments","Shipment Tracker","⛴"],["todo","Pending Tasks","☑"],
  ["registrations","Licences & Registrations","🪪"],["documents","Documents Library","📄"],["calculators","Calculators","🧮"],
  ["finance","Finance & Payments","₹"],["schemes","Incentives & Schemes","🎯"],["procure","Procure & Sell","🔎"],
  ["markets","Markets & FTAs","🌍"],["legal","Legal & Incoterms","⚖"],["contacts","Contacts","👥"],
@@ -1098,7 +1099,7 @@ V.topexports=function(){
     '<div class="tbody"><table class="tbl res"><tr><td>FY 2015-16</td><td>'+usd(g[2])+'</td></tr><tr><td>FY 2019-20</td><td>'+usd(g[3])+'</td></tr><tr><td>FY 2024-25</td><td>'+usd(g[4])+'</td></tr><tr><td>FY 2025-26</td><td><b>'+usd(g[5])+'</b></td></tr><tr><td>Average yearly growth over 10 years</td><td>'+c10.toFixed(1)+'%</td></tr></table>'+
     '<p><b>Products in this group:</b> '+esc(g[6])+'</p><p><b>Where to source in India:</b> '+esc(g[7])+' — see <a href="#sourcefinder" data-srcgroup="'+g[0]+'">districts &amp; cities</a></p><p><b>Countries that buy most:</b> '+esc(g[8])+'</p>'+
     '<p><b>Export council:</b> '+esc(g[11])+'</p><p class="small"><b>💵 What should it cost?</b> Prices move daily — check: '+priceLinks(g[10])+'. Tip: in Tradestat, export value ÷ quantity for your 8-digit HS code gives the average price Indian exporters actually get.</p>'+
-    '<div class="row gap wrap"><button class="btn sm" data-teplan="'+g[0]+'">Plan an export of this</button><a class="btn sm ghost" href="#leads" data-leadsec="'+esc(g[1])+'">See buyer leads</a></div></div></details>'}).join("")+'</div><p class="small muted">'+esc(TRADE_SRC)+'</p>';
+    '<div class="row gap wrap"><button class="btn sm" data-teplan="'+g[0]+'">Plan an export of this</button><a class="btn sm ghost" href="#leads" data-leadsec="'+esc(g[1])+'">See buyer leads</a><button class="btn sm ghost" data-tmgrp="'+g[0]+'" data-tmdir2="X">🗺 Who buys it worldwide</button></div></div></details>'}).join("")+'</div><p class="small muted">'+esc(TRADE_SRC)+'</p>';
 };
 
 /* ---------- SOURCE BY STATE / CITY ---------- */
@@ -1133,7 +1134,7 @@ V.whatimport=function(){
      '<div class="tbody"><p><b>Main supplier countries:</b> '+esc(g[4])+'</p><p><b>What Indian businesses import:</b> '+esc(g[5])+'</p><p class="warn small">⚠ '+esc(g[6])+'</p>'+
      (bodies.length?'<p><b>Find suppliers through official bodies:</b></p><ul>'+bodies.map(c=>'<li><b>'+esc(c)+':</b> '+FOREIGN_BODIES[c].map(b=>'<a href="'+esc(b[1])+'" target="_blank" rel="noopener">'+esc(b[0])+'</a>').join(" · ")+'</li>').join("")+'</ul>':'')+
      '<p class="small">Also: the Indian Embassy commercial wing in each supplier country keeps verified exporter lists. 💵 Price check: '+priceLinks("gen")+'</p>'+
-     '<button class="btn sm" data-wiplan="'+g[0]+'">Plan this import</button></div></details>'}).join("")+'</div><p class="small muted">Values: Dept. of Commerce, India’s merchandise imports by commodity group (US$ million). Supplier countries are the usual main sources; check Tradestat import data for your HS code.</p>';
+     '<div class="row gap wrap"><button class="btn sm" data-wiplan="'+g[0]+'">Plan this import</button><button class="btn sm ghost" data-tmgrp="'+g[0]+'" data-tmdir2="M">🗺 Who sells it worldwide</button></div></div></details>'}).join("")+'</div><p class="small muted">Values: Dept. of Commerce, India’s merchandise imports by commodity group (US$ million). Supplier countries are the usual main sources; check Tradestat import data for your HS code.</p>';
 };
 
 /* ---------- BUYER LEADS & TENDERS ---------- */
@@ -1221,7 +1222,7 @@ V.dashboard=function(){
     return '<div class="card"><div class="row sb wrap gap"><h3>📰 What changed recently</h3><span class="small muted">collected '+fmtDT(UPD.generatedAt)+'</span></div><ul class="plain">'+L.map(i=>'<li>'+(readSet.has(i.id)?'':'<span class="pill amber">New</span> ')+'<span class="small muted">'+esc(showD(parseD(i.date)))+' · '+esc(i.kind||"")+' '+esc(i.num||"")+'</span><br><a href="'+esc(i.link)+'" target="_blank" rel="noopener" data-updopen="'+esc(i.id)+'">'+esc(i.title)+'</a></li>').join("")+'</ul><a class="btn ghost" href="#updates">All updates ('+UPD.items.length+') →</a></div>'})()+
   (()=>{if(!LEADS.items.length)return '<div class="card"><h3>🤝 Buyer leads & tenders</h3><p class="muted small">'+(LEADS.loading?"Checking World Bank, EU TED & news…":"Connect to the internet to load today’s foreign buyer leads and tenders.")+'</p><a class="btn ghost" href="#leads">Open leads →</a></div>';
     const L=LEADS.items.filter(i=>!leadRead.has(i.id)).slice(0,5);
-    return '<div class="card"><div class="row sb wrap gap"><h3>🤝 New buyer leads & tenders</h3><span class="small muted">collected '+fmtDT(LEADS.generatedAt)+'</span></div>'+(L.length?'<ul class="plain">'+L.map(i=>'<li><span class="pill red">New</span> <span class="small muted">'+esc(showD(parseD(i.date||i.firstSeen)))+' · '+esc(i.kind)+(i.country?' · '+esc(i.country):'')+'</span><br><a href="'+esc(i.link)+'" target="_blank" rel="noopener" data-leadopen="'+esc(i.id)+'">'+esc(i.title)+'</a></li>').join("")+'</ul>':'<p class="muted small">No unread leads — you are up to date.</p>')+'<a class="btn ghost" href="#leads">All leads ('+LEADS.items.length+', '+newLeads()+' new) →</a></div>'})()+
+    return '<div class="card"><div class="row sb wrap gap"><h3>🤝 New buyer leads & tenders</h3><span class="small muted">collected '+fmtDT(LEADS.generatedAt)+'</span></div>'+(L.length?'<ul class="plain">'+L.map(i=>'<li><span class="pill red">New</span> <span class="small muted">'+esc(showD(parseD(i.date||i.firstSeen)))+' · '+esc(i.kind)+(i.country?' · '+esc(i.country):'')+'</span><br><a href="'+esc(i.link)+'" target="_blank" rel="noopener" data-leadopen="'+esc(i.id)+'">'+esc(i.title)+'</a></li>').join("")+'</ul>':'<p class="muted small">No unread leads — you are up to date.</p>')+'<a class="btn ghost" href="#leads">All leads ('+LEADS.items.length+', '+newLeads()+' new) →</a></div>'})()+tmDashCard()+
   (()=>{const vis=PREP.filter(prepVisible),d=vis.filter(i=>prepDone(i.id)).length,m=vis.filter(i=>i.need==="Must"&&!prepDone(i.id)).length,pc=vis.length?Math.round(d*100/vis.length):0;
     return '<div class="card"><div class="row sb"><h3>🧰 Before you start</h3><b class="big">'+pc+'%</b></div><div class="bar"><i style="width:'+pc+'%"></i></div><p class="muted small">'+(m?m+' must-have items still missing (bank, GST, IEC…).':'All must-haves in place.')+'</p><a class="btn ghost" href="#prep">Open checklist →</a></div>'})()+
   '<div class="card"><h3>Your profile</h3><div class="grid4">'+
@@ -2059,11 +2060,135 @@ window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredIns
 window.addEventListener("appinstalled",()=>{const b=$("#installbtn");if(b)b.hidden=true});
 document.addEventListener("click",async e=>{if(e.target.id!=="installbtn")return;if(deferredInstall){deferredInstall.prompt();try{await deferredInstall.userChoice}catch(_){};deferredInstall=null;e.target.hidden=true}});
 if("serviceWorker" in navigator&&location.protocol==="https:"){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
+/* ===== v7 MODULE: TRADE MAP — WHO BUYS & WHO SELLS WHAT, WORLDWIDE (UN Comtrade, no AI) ===== */
+let TM={d:null,loading:false,loaded:false,err:""};
+let tmF={tab:"product",hs:"",c:"",all:false,oq:""};
+try{Object.assign(tmF,JSON.parse(localStorage.getItem("garcha-tm-f")||"{}"));tmF.all=false}catch(e){}
+function tmSave(){try{localStorage.setItem("garcha-tm-f",JSON.stringify({tab:tmF.tab,hs:tmF.hs,c:tmF.c}))}catch(e){}}
+async function loadTM(manual){
+  if(TM.loading)return;TM.loading=true;TM.err="";if(manual)render();
+  try{const d=await getJSON("trademap.json");if(!d||!Array.isArray(d.products))throw new Error("bad file");TM.d=d;TM.loaded=true;
+    try{localStorage.setItem("garcha-tm-cache",JSON.stringify(d))}catch(e){}}
+  catch(e){TM.err=navigator.onLine===false?"You are offline — showing the last saved trade figures.":"Could not load trade figures ("+(e.message||"error")+") — showing the last saved copy.";
+    try{const c=JSON.parse(localStorage.getItem("garcha-tm-cache")||"null");if(c&&Array.isArray(c.products)){TM.d=c;TM.loaded=true}}catch(_){}}
+  TM.loading=false;render();
+}
+const tmCN=c=>{const x=TM.d&&TM.d.countries[c];return x?x[0]:"Country "+c};
+function tmUSD(v){v=+v||0;const a=Math.abs(v);return "US$ "+(a>=1e9?(v/1e9).toLocaleString("en-IN",{maximumFractionDigits:1})+" bn":a>=1e6?(v/1e6).toLocaleString("en-IN",{maximumFractionDigits:a>=1e8?0:1})+" mn":a>=1e3?Math.round(v/1e3).toLocaleString("en-IN")+" thousand":Math.round(v).toLocaleString("en-IN"))}
+function tmPerKg(v,kg){if(!(kg>0&&v>0))return "";const p=v/kg;return p>=1000?"":"US$ "+(p<1?p.toFixed(2):p<10?p.toFixed(2):p.toFixed(1))+"/kg"}
+function tmGrow(v,prev){if(!(prev>0))return "";const g=(v-prev)/prev*100;return '<span class="'+(g>=0?"up":"down")+'">'+(g>=0?"▲":"▼")+Math.abs(g).toFixed(0)+'%</span>'}
+function tmSh(x){x=+x||0;return x<=0?"0%":x<0.1?"under 0.1%":(x<10?x.toFixed(1):x.toFixed(0))+"%"}
+function tmP(hs){return TM.d&&TM.d.products.find(p=>p.hs===hs)}
+function tmShort(n){return String(n).split(/[(&,]/)[0].trim()}
+/* a big buyer where India sells little, for a product India already exports well */
+function tmIsOpp(p,b){if(p.dir!=="X"||b[0]===699)return false;const sh=b[1]?b[4]/b[1]:0;return sh<0.05&&b[1]>=Math.max(20e6,p.world*0.015)&&(p.indRank>0&&p.indRank<=20)}
+function tmOpps(){if(!TM.d)return [];const out=[];
+  TM.d.products.filter(p=>p.dir==="X"&&p.indRank>0&&p.indRank<=20).forEach(p=>p.buyers.forEach(b=>{if(!tmIsOpp(p,b))return;const g=b[2]>0?(b[1]-b[2])/b[2]:0;out.push({p,b,score:b[1]*(1-b[4]/b[1])*(g>0?1+Math.min(g,1):0.8)})}));
+  return out.sort((a,b)=>b.score-a.score)}
+function tmBarRow(i,name,v,max,right,extra,hl){return '<div class="tmr'+(hl?" hl":"")+'"><span class="trank">'+i+'</span><span class="tname"><b>'+name+'</b>'+(extra?' '+extra:'')+'<span class="tbar"><i style="width:'+Math.max(2,v/max*100)+'%"></i></span></span><span class="tval">'+tmUSD(v)+(right?'<br>'+right:'')+'</span></div>'}
+function tmSelect(){if(!TM.d)return "";const X=TM.d.products.filter(p=>p.dir==="X"),M=TM.d.products.filter(p=>p.dir==="M");
+  const o=l=>l.map(p=>'<option value="'+p.hs+'"'+(p.hs===tmF.hs?" selected":"")+'>'+esc(p.name)+' (HS '+p.hs+')</option>').join("");
+  return '<select id="tmhs" style="flex:1;min-width:220px"><option value="">— Choose a product —</option><optgroup label="India exports these">'+o(X)+'</optgroup><optgroup label="India imports these">'+o(M)+'</optgroup></select>'}
+function tmProduct(p){
+  const Y=p.year, maxB=p.buyers.length?p.buyers[0][1]:1, ish=p.worldX?p.indX/p.worldX*100:0;
+  const buyers=p.buyers.filter(b=>b[0]!==699);const shown=tmF.all?buyers:buyers.slice(0,15);
+  const opp=buyers.filter(b=>tmIsOpp(p,b));
+  const ikg=p.indiaTo.reduce((s,x)=>s+(x[2]||0),0),iv=p.indiaTo.reduce((s,x)=>s+x[1],0);
+  let h='<div class="card"><h2>'+esc(p.name)+' <span class="small muted">HS '+p.hs+' · '+Y+'</span></h2>'+(p.stale?'<p class="warn small">These figures could not be refreshed this week — showing the last good copy.</p>':'')+
+   '<div class="grid4 tmk"><div><span class="small muted">World buyers imported</span><b>'+tmUSD(p.world)+'</b><span class="small muted">'+p.nImp+' countries</span></div>'+
+   '<div><span class="small muted">India exported</span><b>'+tmUSD(p.indX)+'</b><span class="small muted">'+(p.indRank?'rank #'+p.indRank+' of '+p.nExp+' sellers':'not among reporting sellers')+'</span></div>'+
+   '<div><span class="small muted">India’s share of world sales</span><b>'+ish.toFixed(1)+'%</b><span class="small muted">'+(ish>=10?"a leading supplier":ish>=2?"a known supplier":"a small supplier")+'</span></div>'+
+   '<div><span class="small muted">Average price India got</span><b>'+(tmPerKg(iv,ikg)||"—")+'</b><span class="small muted">value ÷ weight, all grades</span></div></div>'+
+   '<div class="row gap wrap mt">'+(p.dir==="X"?'<button class="btn sm" data-tmplan="'+p.hs+'" data-tmc="'+((opp[0]||buyers[0]||[0])[0])+'">Plan an export to '+esc(tmCN((opp[0]||buyers[0]||[0])[0]))+'</button>':'<button class="btn sm" data-tmplan="'+p.hs+'" data-tmc="'+((p.indiaFrom[0]||p.sellers[0]||[0])[0])+'">Plan an import from '+esc(tmCN((p.indiaFrom[0]||p.sellers[0]||[0])[0]))+'</button>')+
+   '<a class="btn sm ghost" href="#leads" data-tmleads="'+esc(p.kw||p.name)+'">See matching buyer leads</a>'+
+   '<a class="btn sm ghost" href="#'+(p.dir==="X"?"topexports":"whatimport")+'" data-tmgrpopen="'+esc(p.grp)+'" data-tmdir="'+p.dir+'">Where to source / more on this group</a></div></div>';
+  if(opp.length)h+='<div class="card note"><h3>🎯 Gaps India can fill</h3><p class="small">These countries buy a lot of this, but less than 5% of it comes from India — even though India is already the world’s #'+p.indRank+' seller. Start your buyer search here.</p><ul class="plain">'+opp.slice(0,6).map(b=>'<li><b>'+esc(tmCN(b[0]))+'</b> buys '+tmUSD(b[1])+' a year '+tmGrow(b[1],b[2])+' · India sells them '+tmUSD(b[4])+' ('+tmSh(b[4]/b[1]*100)+') <button class="link small" data-tmcountry="'+b[0]+'">see this country →</button></li>').join("")+'</ul></div>';
+  const sec=(t,sub,body)=>'<div class="card"><h3>'+t+'</h3>'+(sub?'<p class="small muted">'+sub+'</p>':'')+body+'</div>';
+  const buyersHTML=sec("🛒 Where the demand is — biggest buyers","Imports in "+Y+" as each country reported them (cost incl. freight). ▲▼ = change from "+(Y-1)+". “India” = how much of it they bought from India.",
+    shown.map((b,i)=>{const sh=b[1]?b[4]/b[1]*100:0;return tmBarRow(i+1,'<button class="link" data-tmcountry="'+b[0]+'">'+esc(tmCN(b[0]))+'</button>',b[1],maxB,tmGrow(b[1],b[2])+(tmPerKg(b[1],b[3])?' <span class="small muted">'+tmPerKg(b[1],b[3])+'</span>':''),'<span class="small muted">India: '+(b[4]?tmUSD(b[4])+' ('+tmSh(sh)+')':'none recorded')+'</span>'+(tmIsOpp(p,b)?' <span class="pill green">Gap</span>':''))}).join("")+
+    (buyers.length>15?'<button class="btn sm ghost mt" id="tmall">'+(tmF.all?"Show top 15":"Show all "+buyers.length)+'</button>':''));
+  const maxS=p.sellers.length?p.sellers[0][1]:1;
+  const sellersHTML=sec(p.dir==="X"?"🏭 Who you compete with — biggest sellers":"🏭 Who sells it — biggest exporting countries (possible suppliers)","Exports in "+Y+" as each country reported them (price at their port).",
+    p.sellers.map((s,i)=>tmBarRow(i+1,esc(tmCN(s[0])),s[1],maxS,tmPerKg(s[1],s[2])?'<span class="small muted">'+tmPerKg(s[1],s[2])+'</span>':'','',s[0]===699)).join("")+(p.indRank>15?'<p class="small">India is #'+p.indRank+' with '+tmUSD(p.indX)+'.</p>':''));
+  const supK=Object.keys(p.sup||{});
+  const supHTML=supK.length?sec("🔍 Who supplies the biggest buyers","Each buyer’s own import records, by supplier country — your competition in that market.",
+    '<div class="grid3">'+supK.map(c=>{const l=p.sup[c],t=l.reduce((s,x)=>s+x[1],0)||1;return '<div><b>'+esc(tmCN(+c))+'</b><ol class="small tmol">'+l.map(x=>'<li'+(x[0]===699?' class="hl"':'')+'>'+esc(tmCN(x[0]))+' — '+tmUSD(x[1])+'</li>').join("")+'</ol></div>'}).join("")+'</div>'):"";
+  const maxI=p.indiaTo.length?p.indiaTo[0][1]:1;
+  const indHTML=p.indiaTo.length?sec("🇮🇳 Where India sells it now","India’s own export records for "+Y+".",p.indiaTo.slice(0,10).map((s,i)=>tmBarRow(i+1,esc(tmCN(s[0])),s[1],maxI,tmPerKg(s[1],s[2])?'<span class="small muted">'+tmPerKg(s[1],s[2])+'</span>':'')).join("")):"";
+  const maxF=p.indiaFrom.length?p.indiaFrom[0][1]:1;
+  const fromHTML=p.indiaFrom.length?sec("📦 Who sells it to India","India’s own import records for "+Y+(p.dir==="M"?" — today’s main sources. Compare their prices with the biggest sellers above.":"."),p.indiaFrom.slice(0,8).map((s,i)=>tmBarRow(i+1,esc(tmCN(s[0])),s[1],maxF,tmPerKg(s[1],s[2])?'<span class="small muted">'+tmPerKg(s[1],s[2])+'</span>':'')).join("")):"";
+  h+=p.dir==="X"?buyersHTML+supHTML+sellersHTML+indHTML+fromHTML:fromHTML+sellersHTML+buyersHTML+supHTML+indHTML;
+  h+='<div class="card note small"><b>Go deeper (exact 6- or 8-digit product):</b> <a href="https://www.trademap.org" target="_blank" rel="noopener">ITC Trade Map</a> (free sign-up; shows company lists in many countries) · <a href="https://comtradeplus.un.org" target="_blank" rel="noopener">UN Comtrade</a> · <a href="https://tradestat.commerce.gov.in" target="_blank" rel="noopener">Tradestat (India, monthly)</a> · <a href="https://www.indiantradeportal.in" target="_blank" rel="noopener">Indian Trade Portal (duties & rules in each market)</a>. To meet the actual buyers, contact the Indian Embassy commercial wing in that country and your export promotion council.</div>';
+  return h;
+}
+function tmCountry(c){
+  const rows=[];TM.d.products.forEach(p=>{const b=p.buyers.find(x=>x[0]===c);if(b)rows.push({p,b})});
+  const sells=[];TM.d.products.forEach(p=>{const s=p.sellers.find(x=>x[0]===c);if(s)sells.push({p,s})});
+  const toIn=[];TM.d.products.forEach(p=>{const s=p.indiaFrom.find(x=>x[0]===c);if(s)toIn.push({p,s})});
+  rows.sort((a,b)=>b.b[1]-a.b[1]);sells.sort((a,b)=>b.s[1]-a.s[1]);toIn.sort((a,b)=>b.s[1]-a.s[1]);
+  const fc=findCountry(tmCN(c));
+  let h='<div class="card"><h2>🌍 '+esc(tmCN(c))+'</h2><p class="small muted">From the '+TM.d.products.length+' products tracked here ('+TM.d.year+' figures).'+(fc?' Market rules, documents and FTA for this country are in the Trade Planner and Markets & FTAs.':'')+'</p></div>';
+  h+='<div class="card"><h3>🛒 What it buys</h3>'+(rows.length?'<table class="tbl res tmt"><tr><th>Product</th><th>It imports</th><th>From India</th><th></th></tr>'+rows.map(({p,b})=>{const sh=b[1]?b[4]/b[1]*100:0;const sp=(p.sup||{})[c];const ip=sp?sp.findIndex(x=>x[0]===699)+1:0;
+    return '<tr><td><button class="link" data-tmgo="'+p.hs+'">'+esc(p.name)+'</button>'+(tmIsOpp(p,b)?' <span class="pill green">Gap</span>':'')+(sp?'<br><span class="small muted">Top suppliers: '+sp.slice(0,3).map(x=>esc(tmCN(x[0]))).join(", ")+(ip?' · India #'+ip:'')+'</span>':'')+'</td><td>'+tmUSD(b[1])+' '+tmGrow(b[1],b[2])+'</td><td>'+(p.dir==="X"?(b[4]?tmUSD(b[4])+'<br><span class="small muted">'+tmSh(sh)+'</span>':'—'):'<span class="small muted">India imports this</span>')+'</td><td>'+(p.dir==="X"?'<button class="btn sm ghost" data-tmplan="'+p.hs+'" data-tmc="'+c+'">Plan</button>':'')+'</td></tr>'}).join("")+'</table>':'<p class="muted small">It is not among the top 40 buyers of any tracked product.</p>')+'</div>';
+  if(sells.length)h+='<div class="card"><h3>🏭 What it sells to the world</h3><ul class="plain">'+sells.map(({p,s})=>'<li><button class="link" data-tmgo="'+p.hs+'">'+esc(p.name)+'</button> — '+tmUSD(s[1])+'</li>').join("")+'</ul></div>';
+  if(toIn.length)h+='<div class="card"><h3>📦 What India buys from it</h3><ul class="plain">'+toIn.map(({p,s})=>'<li><button class="link" data-tmgo="'+p.hs+'">'+esc(p.name)+'</button> — '+tmUSD(s[1])+'</li>').join("")+'</ul></div>';
+  return h;
+}
+function tmCountryList(){const m=new Map();TM.d.products.forEach(p=>[p.buyers,p.sellers,p.indiaFrom].forEach(l=>l.forEach(x=>{if(x[0]!==699)m.set(x[0],(m.get(x[0])||0)+x[1])})));
+  return [...m.keys()].sort((a,b)=>tmCN(a).localeCompare(tmCN(b)))}
+V.trademap=function(){
+  if(!TM.loaded&&!TM.loading&&!TM.err)setTimeout(()=>loadTM(true),0);
+  let h='<div class="card"><div class="row sb wrap gap"><h2>🗺 Trade Map — who buys & who sells what</h2><button class="btn sm ghost" id="tmnow" '+(TM.loading?"disabled":"")+'>'+(TM.loading?"Loading…":"Refresh")+'</button></div>'+
+   '<p class="small muted">See where the demand is for a product, which countries supply it, how India compares, and where Indian sellers have room to grow. Figures: UN Comtrade (every country’s own customs records), refreshed every week. They show countries, not company names — use the buyer leads, embassies and export councils to reach the buyers.</p>'+
+   (TM.d?'<p class="small">Year shown: <b>'+TM.d.year+'</b> (the latest year most countries have reported) · '+TM.d.products.length+' products · updated '+fmtDT(TM.d.generatedAt)+'</p>':'')+(TM.err?'<p class="warn small">'+esc(TM.err)+'</p>':'')+
+   '<div class="seg mt">'+[["product","By product"],["country","By country"],["opps","Best gaps for India"]].map(x=>'<button data-tmtab="'+x[0]+'" class="'+(tmF.tab===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div></div>';
+  if(!TM.d)return h+'<div class="card empty">'+(TM.loading?"Loading world trade figures…":"Connect to the internet once to load the Trade Map.")+'</div>';
+  if(tmF.tab==="product"){
+    h+='<div class="card"><div class="row gap wrap">'+tmSelect()+'</div><p class="small muted mt">Tip: tap a country name to see everything it buys.</p></div>';
+    const p=tmP(tmF.hs);
+    if(!p){h+='<div class="card"><h3>Popular starting points</h3><div class="row gap wrap">'+TM.d.products.filter(p=>p.dir==="X").sort((a,b)=>b.indX-a.indX).slice(0,12).map(p=>'<button class="btn sm ghost" data-tmgo="'+p.hs+'">'+esc(tmShort(p.name))+'</button>').join("")+'</div></div>';return h}
+    return h+tmProduct(p);
+  }
+  if(tmF.tab==="country"){
+    const cl=tmCountryList();
+    h+='<div class="card"><select id="tmc" style="width:100%"><option value="">— Choose a country —</option>'+cl.map(c=>'<option value="'+c+'"'+(+tmF.c===c?" selected":"")+'>'+esc(tmCN(c))+'</option>').join("")+'</select></div>';
+    if(!tmF.c||!cl.includes(+tmF.c))return h+'<div class="card"><h3>Biggest buyers overall</h3><div class="row gap wrap">'+(()=>{const m=new Map();TM.d.products.forEach(p=>p.buyers.forEach(b=>{if(b[0]!==699)m.set(b[0],(m.get(b[0])||0)+b[1])}));return [...m.entries()].sort((a,b)=>b[1]-a[1]).slice(0,15).map(([c])=>'<button class="btn sm ghost" data-tmcountry="'+c+'">'+esc(tmCN(c))+'</button>').join("")})()+'</div></div>';
+    return h+tmCountry(+tmF.c);
+  }
+  const O=tmOpps().filter(o=>!tmF.oq||(o.p.name+" "+tmCN(o.b[0])).toLowerCase().includes(tmF.oq.toLowerCase()));
+  h+='<div class="card"><h3>🎯 Best gaps for Indian exporters</h3><p class="small muted">Product + country pairs where the country buys a lot (at least US$ 20 mn a year), less than 5% comes from India, and India is already a top-20 world seller — so Indian goods can compete. Ranked by how much is still bought from others, with growing markets first.</p><input id="tmoq" placeholder="Filter e.g. rice, Germany…" value="'+esc(tmF.oq)+'" style="width:100%"></div>';
+  h+='<div class="card">'+(O.length?O.slice(0,40).map((o,i)=>{const b=o.b,sp=(o.p.sup||{})[b[0]];return '<div class="tmr"><span class="trank">'+(i+1)+'</span><span class="tname"><b><button class="link" data-tmgo="'+o.p.hs+'">'+esc(o.p.name)+'</button> → <button class="link" data-tmcountry="'+b[0]+'">'+esc(tmCN(b[0]))+'</button></b><br><span class="small muted">Buys '+tmUSD(b[1])+' '+tmGrow(b[1],b[2])+' · from India '+tmUSD(b[4])+' ('+tmSh(b[4]/b[1]*100)+') · India is world #'+o.p.indRank+(sp?' · now supplied by '+sp.slice(0,3).map(x=>esc(tmCN(x[0]))).join(", "):'')+'</span></span><span class="tval"><button class="btn sm ghost" data-tmplan="'+o.p.hs+'" data-tmc="'+b[0]+'">Plan</button></span></div>'}).join(""):'<p class="muted">No gaps match.</p>')+'</div>';
+  return h;
+};
+function tmDashCard(){
+  if(!TM.d)return "";const w=myWords();if(!w.length)return "";
+  const p=TM.d.products.find(p=>w.some(x=>(p.name+" "+(p.kw||"")).toLowerCase().includes(x)));if(!p)return "";
+  const B=(p.dir==="X"?p.buyers:p.sellers).filter(b=>b[0]!==699).slice(0,5);
+  return '<div class="card"><div class="row sb wrap gap"><h3>🗺 '+(p.dir==="X"?"Top buyers":"Top sellers")+' of '+esc(tmShort(p.name))+'</h3><span class="small muted">'+p.year+'</span></div><ul class="plain">'+B.map(b=>'<li><b>'+esc(tmCN(b[0]))+'</b> — '+tmUSD(b[1])+(p.dir==="X"&&tmIsOpp(p,b)?' <span class="pill green">Gap for India</span>':'')+'</li>').join("")+'</ul><a class="btn ghost" href="#trademap" data-tmgo="'+p.hs+'">Open Trade Map →</a></div>';
+}
+document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const d=b.dataset;
+  if(d.tmtab){tmF.tab=d.tmtab;tmSave();render();return}
+  if(d.tmgo){tmF.tab="product";tmF.hs=d.tmgo;tmF.all=false;tmSave();if(location.hash!=="#trademap")location.hash="trademap";else{render();window.scrollTo(0,0)}return}
+  if(d.tmcountry){tmF.tab="country";tmF.c=d.tmcountry;tmSave();if(location.hash!=="#trademap")location.hash="trademap";else{render();window.scrollTo(0,0)}return}
+  if(b.id==="tmall"){tmF.all=!tmF.all;render();return}
+  if(b.id==="tmnow"){loadTM(true);return}
+  if(d.tmplan){const p=tmP(d.tmplan);if(!p)return;PL=newPlanInput({dir:p.dir==="X"?"export":"import",product:tmShort(p.name),country:findCountry(tmCN(+d.tmc))||"Other country"});PL.hs=p.hs;location.hash="planner";return}
+  if(d.tmleads!=null){ldF.q=String(d.tmleads).split(",")[0].trim();ldF.sector="";ldF.kind="";ldF.only="all";ldF.mine=false;return}
+  if(d.tmgrpopen){if(d.tmdir==="X"){const g=EXPORT_GROUPS.find(x=>x[0]===d.tmgrpopen);teQ=g?g[1]:""}else{const g=IMPORT_GROUPS.find(x=>x[0]===d.tmgrpopen);wiQ=g?g[1]:""}return}
+  if(d.tmgrp){const p=TM.d&&TM.d.products.find(x=>x.grp===d.tmgrp&&x.dir===d.tmdir2);tmF.tab="product";tmF.hs=p?p.hs:"";tmSave();location.hash="trademap";return}
+});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.id==="tmhs"){tmF.hs=t.value;tmF.all=false;tmSave();render();return}
+  if(t.id==="tmc"){tmF.c=t.value;tmSave();render();return}
+});
+document.addEventListener("input",e=>{const t=e.target;if(t.id==="tmoq"){tmF.oq=t.value;render()}});
+setTimeout(()=>{if(!TM.loaded&&(myWords().length||cur()==="trademap"))loadTM(false)},1500);
+
 /* ---------- BOOT ---------- */
 render();
 setTimeout(initCloud,0);
 setTimeout(()=>loadUpdates(false),0);
-window.__GARCHA={LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
+window.__GARCHA={TM,loadTM,tmOpps,get tmF(){return tmF},LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
 })();
 </script>
 </body>

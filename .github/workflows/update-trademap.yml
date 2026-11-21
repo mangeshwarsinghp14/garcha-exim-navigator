@@ -1,0 +1,42 @@
+name: Update Trade Map (who buys & sells what)
+
+on:
+  schedule:
+    - cron: "40 21 * * *"   # 03:10 IST daily — refreshes the 12 oldest products, so all are renewed about every 6 days
+  workflow_dispatch:
+    inputs:
+      all:
+        description: "Refresh every product now (takes about 45 minutes)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-trademap
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Collect world trade figures from UN Comtrade (no AI, no key)
+        continue-on-error: true
+        env:
+          TM_ALL: ${{ github.event.inputs.all == 'true' && '1' || '' }}
+        run: node scripts/fetch-trademap.mjs
+      - name: Save changes
+        run: |
+          git config user.name "garcha-exim-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/trademap.json data/trademap-status.json
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Trade Map update $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash || true
+          git push
