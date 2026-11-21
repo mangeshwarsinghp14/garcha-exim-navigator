@@ -9,7 +9,9 @@ const REF = "https://comtradeapi.un.org/files/v1/app/reference/";
 const INDIA = 699;
 const GAP_MS = +(process.env.TM_GAP_MS || 4500); // the public API allows about one request every few seconds
 const ONLY = (process.env.TM_ONLY || "").split(",").filter(Boolean); // test a few HS codes
-const BATCH = +(process.env.TM_BATCH || 12); // products refreshed per run (oldest first); TM_ALL=1 refreshes all
+const BATCH = +(process.env.TM_BATCH || 20); // products refreshed per run (oldest first); TM_ALL=1 refreshes all
+const MIN_AGE_DAYS = +(process.env.TM_MIN_AGE_DAYS || 6); // skip products refreshed more recently than this
+// The public API has a call quota (about 200 calls, then a ~20-minute pause), so each run stays under ~170 calls.
 const ALL = process.env.TM_ALL === "1";
 const OUT = "data/trademap.json", STATUS = "data/trademap-status.json";
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -113,7 +115,9 @@ async function main() {
   const Y = await chooseYear();
   const items = cfg.items;
   const age = p => { const o = oldBy[p.hs]; return o && o.year === Y && !o.stale ? (o.fetchedAt || "0") : ""; };
-  const todo = new Set((ONLY.length ? items.filter(p => ONLY.includes(p.hs)) : ALL ? items : items.slice().sort((a, b) => age(a).localeCompare(age(b))).slice(0, BATCH)).map(p => p.hs));
+  const cutoff = new Date(Date.now() - MIN_AGE_DAYS * 864e5).toISOString();
+  const todo = new Set((ONLY.length ? items.filter(p => ONLY.includes(p.hs)) : ALL ? items : items.filter(p => age(p) < cutoff).sort((a, b) => age(a).localeCompare(age(b))).slice(0, BATCH)).map(p => p.hs));
+  if (!todo.size) console.log("All products are fresh — nothing to do");
   const errors = [];
   let ok = 0;
   const done = {}; // hs -> fresh product

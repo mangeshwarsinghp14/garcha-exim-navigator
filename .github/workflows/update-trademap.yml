@@ -2,11 +2,11 @@ name: Update Trade Map (who buys & sells what)
 
 on:
   schedule:
-    - cron: "40 21 * * *"   # 03:10 IST daily — refreshes the 12 oldest products, so all are renewed about every 6 days
+    - cron: "40 21,3,9,15 * * *"   # 03:10, 09:10, 15:10, 21:10 IST — each run refreshes up to 20 products older than 6 days (stays under the API quota)
   workflow_dispatch:
     inputs:
       all:
-        description: "Refresh every product now (takes about 45 minutes)"
+        description: "Try every product now (stops when the API quota runs out; the rest follow in later runs)"
         type: boolean
         default: false
 
