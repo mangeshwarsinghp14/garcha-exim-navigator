@@ -7,6 +7,8 @@ India export–import guide app — **no AI needed**, works offline, and **colle
 - **Install on phone (Android):** open the link in Chrome → ⋮ → **Install app** / **Add to Home screen**. Works offline after the first open; your data stays on your device (move it with *Backup & Export*).
 
 ## What's inside
+**v8:** 🔗 **Sell & Source** · one list: *what is wanted and where* (live tenders & buyer news, plus big buying countries where India sells little) with *where to procure it in India* in front (best-matching districts/clusters, export council, find-manufacturers link) · Buy-abroad view: what India imports most with the countries to procure from and their trade-promotion bodies · Share on WhatsApp.
+
 **v7:** 🗺 **Trade Map — who buys & who sells what** · pick a product to see the biggest buying countries (with 1-year growth and how much they already buy from India), the biggest selling countries (India's rank and share), who supplies the top buyers, where India sells now and who sells to India · pick a country to see everything it buys and sells · **Best gaps for India**: big buyers that take under 5% from India for products India already sells well. Figures: UN Comtrade, 66 products (edit `data/trademap-products.json`).
 
 **v6:** 🤝 Buyer Leads & Tenders (World Bank-funded tenders, EU TED supply tenders, news of foreign brands sourcing from India — unread items tagged *New*, with dates & deadline countdown) · 📈 Top Exports from India (30 groups, FY 2015-16 → FY 2025-26, where to source, who buys, price-check links) · 📍 Source by State / City (181 districts & clusters across all 36 states/UTs) · 📦 What to Import & From Where (26 import groups, supplier countries, official foreign trade-promotion bodies).

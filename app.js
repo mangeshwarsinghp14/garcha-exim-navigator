@@ -69,7 +69,7 @@ async function initCloud(){
 
 /* ---------- ROUTING ---------- */
 const VIEWS=[
- ["dashboard","Dashboard","◉"],["updates","Latest Rulings & Updates","📰"],["leads","Buyer Leads & Tenders","🤝"],["trademap","Trade Map: who buys & sells","🗺"],["topexports","Top Exports from India","📈"],["sourcefinder","Source by State / City","📍"],["whatimport","What to Import & From Where","📦"],["prep","Before You Start (checklist)","🧰"],["planner","Trade Planner (flowchart)","🧭"],["roadmap","Step-by-step Roadmap","➜"],["shipments","Shipment Tracker","⛴"],["todo","Pending Tasks","☑"],
+ ["dashboard","Dashboard","◉"],["updates","Latest Rulings & Updates","📰"],["leads","Buyer Leads & Tenders","🤝"],["trademap","Trade Map: who buys & sells","🗺"],["demand","Sell & Source: demand → procure","🔗"],["topexports","Top Exports from India","📈"],["sourcefinder","Source by State / City","📍"],["whatimport","What to Import & From Where","📦"],["prep","Before You Start (checklist)","🧰"],["planner","Trade Planner (flowchart)","🧭"],["roadmap","Step-by-step Roadmap","➜"],["shipments","Shipment Tracker","⛴"],["todo","Pending Tasks","☑"],
  ["registrations","Licences & Registrations","🪪"],["documents","Documents Library","📄"],["calculators","Calculators","🧮"],
  ["finance","Finance & Payments","₹"],["schemes","Incentives & Schemes","🎯"],["procure","Procure & Sell","🔎"],
  ["markets","Markets & FTAs","🌍"],["legal","Legal & Incoterms","⚖"],["contacts","Contacts","👥"],
@@ -1189,7 +1189,7 @@ function tmCountryList(){const m=new Map();TM.d.products.forEach(p=>[p.buyers,p.
 V.trademap=function(){
   if(!TM.loaded&&!TM.loading&&!TM.err)setTimeout(()=>loadTM(true),0);
   let h='<div class="card"><div class="row sb wrap gap"><h2>🗺 Trade Map — who buys & who sells what</h2><button class="btn sm ghost" id="tmnow" '+(TM.loading?"disabled":"")+'>'+(TM.loading?"Loading…":"Refresh")+'</button></div>'+
-   '<p class="small muted">See where the demand is for a product, which countries supply it, how India compares, and where Indian sellers have room to grow. Figures: UN Comtrade (every country’s own customs records), refreshed every week. They show countries, not company names — use the buyer leads, embassies and export councils to reach the buyers.</p>'+
+   '<p class="small muted">See where the demand is for a product, which countries supply it, how India compares, and where Indian sellers have room to grow. Figures: UN Comtrade (every country’s own customs records), refreshed every week. They show countries, not company names — use the buyer leads, embassies and export councils to reach the buyers. For one list of demand with where to procure each item, open <a href="#demand">🔗 Sell & Source</a>.</p>'+
    (TM.d?'<p class="small">Year shown: <b>'+TM.d.year+'</b> (the latest year most countries have reported) · '+TM.d.products.length+' products · updated '+fmtDT(TM.d.generatedAt)+'</p>':'')+(TM.err?'<p class="warn small">'+esc(TM.err)+'</p>':'')+
    '<div class="seg mt">'+[["product","By product"],["country","By country"],["opps","Best gaps for India"]].map(x=>'<button data-tmtab="'+x[0]+'" class="'+(tmF.tab===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div></div>';
   if(!TM.d)return h+'<div class="card empty">'+(TM.loading?"Loading world trade figures…":"Connect to the internet once to load the Trade Map.")+'</div>';
@@ -1234,9 +1234,101 @@ document.addEventListener("change",e=>{const t=e.target;
 document.addEventListener("input",e=>{const t=e.target;if(t.id==="tmoq"){tmF.oq=t.value;render()}});
 setTimeout(()=>{if(!TM.loaded&&(myWords().length||cur()==="trademap"))loadTM(false)},1500);
 
+/* ===== v8 MODULE: SELL & SOURCE — ACTIVE DEMAND → WHERE TO PROCURE (no AI) ===== */
+let dmF={side:"sell",src:"all",q:"",mine:false,n:30};
+try{Object.assign(dmF,JSON.parse(localStorage.getItem("garcha-dm-f")||"{}"));dmF.n=30}catch(e){}
+function dmSave(){try{localStorage.setItem("garcha-dm-f",JSON.stringify({side:dmF.side,src:dmF.src,mine:dmF.mine}))}catch(e){}}
+/* lead sector (from the notice's product code) → export groups that make it */
+const DM_SECT={"Medical & pharma":"pha","Vehicles & parts":"eng","Electronics & IT":"ele","Lab & instruments":"eng","Furniture & home textiles":"cot,hc","Machinery":"eng","Agri & food":"cer,fv,rice,spi","Electrical":"ele,eng","Construction materials":"cera,eng","Textiles & apparel":"rmg,cot","Security & defence":"eng","Chemicals":"chem","Sports, toys & music":"oth","Minerals & metals":"eng,iron","Paper & printing":"oth","Leather & textiles":"lea,rmg"};
+/* words in a notice title → export groups (English and common EU words) */
+const DM_KW=[["ambulance|vehicle|truck|trailer|semi-trailer|bus\\b|buses\\b|car\\b|cars\\b|motorcycle|tyre\\b|tire\\b|spare part|automo|bicycle","eng"],["medic|pharma|drug|vaccin|syringe|surgical|hospital|diagnost|reagent|bandage|dressing|glove|face mask|ppe\\b|ivd\\b|catheter|implant|orthop|dental|cardiac|radiotherap|operating-theatre","pha"],["tablet computer|tablets|tablettes|laptop|computer|server|printer|video|camera|phone|telecom|network equipment|cctv|surveillance|electronic|ict\\b|it equipment","ele"],["solar|cable|transformer|generator|electric|electro|lighting|lamp\\b|led\\b|battery|batteries|meter\\b","ele"],["pump\\b|valve|machine|machinery|tool\\b|boiler|compressor|crane|engine|bearing|kitchen equipment|appliance","eng"],["laborator|scientific|instrument|microscope|analy[sz]er|chromatograph","eng"],["steel|pipe|iron|alumin|metal|casting|forging|fabricat|fastener","eng"],["rice\\b","rice"],["spice|pepper|turmeric|cumin","spi"],["tea\\b","tea"],["coffee","cof"],["fruit|vegetable|potato|onion|mango|grape|banana","fv"],["food|bakery|bread|biscuit|grocer|flour|cereal|pulse|lentil|dairy|beverage","cer"],["fish\\b|seafood|shrimp|prawn","mar"],["meat\\b|poultry|chicken","meat"],["textile|fabric|garment|uniform|clothing|apparel|workwear|t-shirt|shirt|blanket|bedding|linen|towel|curtain|mattress","rmg,cot"],["footwear|shoe\\b|boot\\b|leather|handbag","lea"],["furniture|chair|desk|wooden|cabinet|shelving","hc,oth"],["carpet|rug\\b","carp"],["chemical|fertili[sz]er|pesticide|detergent|disinfect|paint\\b|cleaning product|soap\\b","chem"],["plastic|polyeth|packaging|container","pla"],["tile\\b|ceramic|sanitary ware|cement|brick","cera"],["jewel|diamond","gem"],["paper|printing|book\\b|stationery|envelope","oth"],["sport|toy\\b|gym|fitness|music","oth"],["jute|sack\\b","jute"]].map(([a,k])=>[new RegExp("\\b(?:"+a+")"),k]);
+const DM_STOP=new Set("supply delivery supplies procurement purchase acquisition provision various related products product services service goods other equipment lot lots for and the with from into year years framework agreement contract tender national public works natural miscellaneous misc item items special purpose unit units device devices system systems article articles accessory accessories part parts material materials set sets type types hand general industrial".split(" "));
+function dmWords(t){return [...new Set(String(t).toLowerCase().split(/[^a-z]+/).filter(w=>w.length>3&&!DM_STOP.has(w)).map(w=>w.replace(/(ies)$/,"y").replace(/s$/,"")))]}
+function dmEnglish(l){const t=String(l.title||"");return (l.src==="ted"?t.split(" – ")[0]:t).trim()}
+function dmGroups(text,sector){const t=" "+String(text).toLowerCase()+" ",g=[];
+  DM_KW.forEach(([re,ks])=>{if(re.test(t))ks.split(",").forEach(k=>{if(!g.includes(k))g.push(k)})});
+  if(!g.length)String(DM_SECT[sector]||"").split(",").filter(Boolean).forEach(k=>{if(!g.includes(k))g.push(k)}); // title words first; the notice's sector only as fallback
+  return g}
+let DM_ALLD=null;
+function dmAllDistricts(){if(!DM_ALLD){DM_ALLD=[];Object.entries(DISTRICTS).forEach(([s,ds])=>ds.forEach(d=>DM_ALLD.push({st:s,name:d[0],prod:d[1],g:d[2].split(","),who:d[3],w:dmWords(d[1])})))}return DM_ALLD}
+/* best 3 districts: product words that match beat group-only matches */
+function dmDistricts(groups,words){if(!groups.length&&!words.length)return [];
+  const sc=dmAllDistricts().map(d=>{const kw=words.filter(w=>d.w.some(x=>x===w||(x.length>4&&w.length>4&&(x.startsWith(w)||w.startsWith(x))))).length;const gi=groups.findIndex(k=>d.g.includes(k));
+    const gs=gi<0?0:(6-Math.min(gi,5))+(d.g[0]===groups[gi]?2:0)+(d.g.length===1?1:0); // main product of the district counts more
+    return {d,kw,s:(gi<0&&groups.length?kw*4:kw*10)+gs+(S.profile.state===d.st?1:0)}}).filter(x=>x.s>0&&(x.kw>0||groups.length)&&(x.s>=6||x.kw>0)).sort((a,b)=>b.s-a.s);
+  const out=[],used=new Set();
+  for(const x of sc){if(out.length>=3)break;if(used.has(x.d.st)&&!(x.kw>0)&&sc.some(y=>!used.has(y.d.st)&&y.s>=x.s-2&&!out.includes(y)))continue;out.push(x);used.add(x.d.st)} // spread across states
+  return out.map(x=>x.d)}
+function dmDays(dl){if(!dl)return null;return Math.ceil((new Date(dl+"T23:59:59")-new Date())/864e5)}
+function dmSellRows(){const rows=[],today=new Date().toISOString().slice(0,10);
+  (LEADS.items||[]).forEach(l=>{if(l.deadline&&l.deadline<today)return;if(/Services|Software|Fuels/.test(l.sector||""))return;
+    const en=dmEnglish(l);if(/consult|services? for|workshop|training|audit|insurance|hosting|licen[cs]e|cpanel|study\b|survey|design and supervision|gravel|sand\b|crushed stone|asphalt|electricity|natural gas|water supply|fuel/i.test(en))return;
+    const g=dmGroups(en,l.sector);if(!g.length)return;const ds=dmDistricts(g,dmWords(en));if(!ds.length)return;
+    rows.push({kind:l.kind==="Tender"?"Tender":"Buyer news",what:en,where:[l.buyer,l.country].filter(Boolean).join(", "),when:l.deadline,link:l.link,g,ds,src:"lead"})});
+  if(TM.d)tmOpps().forEach(o=>{const b=o.b,p=o.p;const ds=dmDistricts(p.grp.split(","),dmWords(p.name+" "+(p.kw||"").replace(/,/g," ")));
+    rows.push({kind:"Market gap",what:p.name,where:tmCN(b[0])+" — buys "+tmUSD(b[1])+" a year, under 5% from India",when:"",link:"",hs:p.hs,c:b[0],g:[p.grp],ds,src:"gap",val:b[1]})});
+  return rows}
+function dmBuyRows(){const rows=[];
+  IMPORT_GROUPS.forEach(g=>{const p=TM.d&&TM.d.products.find(x=>x.dir==="M"&&x.grp===g[0]);
+    const now=String(g[4]).split(/,\s*/).filter(Boolean).slice(0,4);
+    const world=p?p.sellers.filter(s=>s[0]!==699).slice(0,4).map(s=>tmCN(s[0])+(tmPerKg(s[1],s[2])?" ("+tmPerKg(s[1],s[2])+")":"")):[];
+    const bodies=[...new Set(now.concat(p?p.sellers.slice(0,4).map(s=>tmCN(s[0])):[]))].map(c=>[c,(FOREIGN_BODIES[c]||[])[0]]).filter(x=>x[1]).slice(0,3);
+    rows.push({what:g[1],need:g[3],now,world,bodies,caution:g[6],grp:g[0],hs:p?p.hs:""})});
+  return rows.sort((a,b)=>b.need-a.need)}
+function dmProcure(ds,g){const eg=g.map(k=>EG[k]).filter(Boolean)[0];
+  return ds.map(d=>'<div class="dmd"><button class="link" data-dmsrc="'+esc(d.name.replace(/\s*\(.*\)/,""))+'">📍 <b>'+esc(d.name)+'</b>, '+esc(d.st)+'</button><br><span class="small muted">'+esc(d.prod)+'</span></div>').join("")+
+   '<div class="small">'+(eg&&eg[11]&&eg[11]!=="—"?'🏛 '+esc(eg[11])+' · ':'')+'<a href="'+G((ds[0]?ds[0].prod.split(",")[0]:"")+" manufacturers "+(ds[0]?ds[0].name.replace(/\s*\(.*\)/,""):"India"))+'" target="_blank" rel="noopener">Find manufacturers</a></div>'}
+V.demand=function(){
+  if(!LEADS.loaded&&!LEADS.loading)setTimeout(()=>loadLeads&&loadLeads(false),0);
+  if(!TM.loaded&&!TM.loading&&!TM.err)setTimeout(()=>loadTM(false),0);
+  const q=dmF.q.trim().toLowerCase(),mw=dmF.mine?myWords():[];
+  let h='<div class="card"><h2>🔗 Sell & Source — who wants what, and where to get it</h2><p class="small muted">Each line: <b>what is wanted</b> and <b>where</b>, and in front of it <b>where you can procure it</b>. Demand comes from live tenders and buyer news (updated twice a day) and from countries that buy a lot but take little from India (Trade Map). Sources in India come from the district list (Source by State/City).</p>'+
+   '<div class="seg mt">'+[["sell","Sell abroad: demand → procure in India"],["buy","Buy abroad: India’s needs → procure from"]].map(x=>'<button data-dmside="'+x[0]+'" class="'+(dmF.side===x[0]?"on":"")+'">'+x[1]+'</button>').join("")+'</div>'+
+   '<div class="row gap wrap mt"><input id="dmq" placeholder="Filter: rice, Germany, medicines…" value="'+esc(dmF.q)+'" style="flex:1;min-width:200px">'+
+   (dmF.side==="sell"?'<select id="dmsrc"><option value="all"'+(dmF.src==="all"?" selected":"")+'>All demand</option><option value="lead"'+(dmF.src==="lead"?" selected":"")+'>Live tenders & buyer news</option><option value="gap"'+(dmF.src==="gap"?" selected":"")+'>Big buying countries (gaps)</option></select><label class="small"><input type="checkbox" id="dmmine"'+(dmF.mine?" checked":"")+'> Only my products</label>':'')+'</div></div>';
+  if(dmF.side==="sell"){
+    let rows=dmSellRows().filter(r=>dmF.src==="all"||r.src===dmF.src);
+    if(q)rows=rows.filter(r=>(r.what+" "+r.where+" "+r.ds.map(d=>d.name+" "+d.st+" "+d.prod).join(" ")).toLowerCase().includes(q));
+    if(mw.length)rows=rows.filter(r=>mw.some(w=>(r.what+" "+r.ds.map(d=>d.prod).join(" ")).toLowerCase().includes(w)));
+    const hit=r=>q&&r.what.toLowerCase().includes(q)?0:1; // when filtering, lines whose wanted item matches come first
+    rows.sort((a,b)=>(hit(a)-hit(b))||(a.src===b.src?0:a.src==="lead"?-1:1)||((a.when||"9")<(b.when||"9")?-1:(a.when||"9")>(b.when||"9")?1:0)||((b.val||0)-(a.val||0)));
+    if(dmF.mine&&!mw.length)h+='<div class="card note small">“Only my products” needs your products: add them on the Dashboard profile (Product) or make a plan in the Trade Planner.</div>';
+    if(!rows.length)return h+'<div class="card empty">'+((LEADS.loading||TM.loading)?"Loading demand…":"Nothing matches. Clear the filter or untick “Only my products”.")+'</div>';
+    const shown=rows.slice(0,dmF.n);
+    h+='<div class="card"><div class="row sb wrap gap"><span class="small"><b>'+rows.length+'</b> lines</span><button class="btn sm ghost" id="dmwa">Share on WhatsApp</button></div>'+
+     '<table class="tbl res dmt"><tr><th>What is wanted · where</th><th>Procure it from (India)</th></tr>'+shown.map(r=>{const dl=dmDays(r.when);
+      return '<tr><td><span class="pill '+(r.src==="gap"?"amber":"green")+'">'+esc(r.kind)+'</span> <b>'+esc(r.what)+'</b><br><span class="small">🌍 '+esc(r.where)+'</span>'+(dl!=null?'<br><span class="small '+(dl<=7?"down":"muted")+'">⏳ closes '+showD(parseD(r.when))+' ('+dl+' days)</span>':'')+
+       '<div class="row gap wrap mt">'+(r.link?'<a class="btn sm ghost" href="'+esc(r.link)+'" target="_blank" rel="noopener">Open notice</a>':'')+(r.src==="gap"?'<button class="btn sm ghost" data-tmplan="'+r.hs+'" data-tmc="'+r.c+'">Plan</button><button class="btn sm ghost" data-tmgo="'+r.hs+'">Trade Map</button>':'')+'</div></td><td>'+dmProcure(r.ds,r.g)+'</td></tr>'}).join("")+'</table>'+
+     (rows.length>dmF.n?'<button class="btn ghost mt" id="dmmore">Show 30 more</button>':'')+'</div>';
+    h+='<div class="card note small">⚠️ Tenders: read the notice for who may bid (many EU tenders accept foreign bidders, often with an EU partner). Buyer news: verify the company before sending samples or prices — genuine buyers never ask for a registration fee. Suppliers: visit or video-call the unit, take a sample and check GST/Udyam registration before you pay.</div>';
+    return h;
+  }
+  let rows=dmBuyRows();if(q)rows=rows.filter(r=>(r.what+" "+r.now.join(" ")+" "+r.world.join(" ")).toLowerCase().includes(q));
+  h+='<div class="card"><div class="row sb wrap gap"><span class="small"><b>'+rows.length+'</b> things India imports most (FY 2025-26)</span><button class="btn sm ghost" id="dmwa">Share on WhatsApp</button></div><table class="tbl res dmt"><tr><th>What India needs</th><th>Procure it from (abroad)</th></tr>'+rows.map(r=>
+    '<tr><td><b>'+esc(r.what)+'</b><br><span class="small">India imported '+usd(r.need)+' in FY 2025-26</span>'+(r.caution?'<br><span class="small muted">⚠️ '+esc(r.caution)+'</span>':'')+'<div class="row gap wrap mt"><button class="btn sm ghost" data-wiplan="'+r.grp+'">Plan import</button>'+(r.hs?'<button class="btn sm ghost" data-tmgo="'+r.hs+'">Trade Map</button>':'')+'</div></td>'+
+    '<td><div class="dmd">🇮🇳 <b>India buys now from:</b> '+esc(r.now.join(", "))+'</div>'+(r.world.length?'<div class="dmd">🏭 <b>Biggest world sellers:</b> '+esc(r.world.join(", "))+'</div>':'')+
+    (r.bodies.length?'<div class="small">🤝 '+r.bodies.map(([c,b])=>'<a href="'+esc(b[1])+'" target="_blank" rel="noopener">'+esc(b[0].split(" – ")[0])+'</a> ('+esc(c)+')').join(" · ")+'</div>':'')+'</td></tr>').join("")+'</table></div>';
+  return h;
+};
+function dmShareText(){
+  if(dmF.side==="buy")return "What India imports & where to procure it — GARCHA EXIM Navigator\n\n"+dmBuyRows().slice(0,15).map((r,i)=>(i+1)+". "+r.what+" — buy from: "+r.now.join(", ")).join("\n");
+  const rows=dmSellRows().filter(r=>dmF.src==="all"||r.src===dmF.src).filter(r=>!dmF.q||(r.what+" "+r.where).toLowerCase().includes(dmF.q.toLowerCase())).slice(0,15);
+  return "Who wants what & where to procure it in India — GARCHA EXIM Navigator\n\n"+rows.map((r,i)=>(i+1)+". "+r.what+" — "+r.where+(r.when?" (closes "+r.when+")":"")+"\n   Procure: "+r.ds.map(d=>d.name+", "+d.st).join("; ")+(r.link?"\n   "+r.link:"")).join("\n")}
+document.addEventListener("click",e=>{const b=e.target.closest("button,a");if(!b)return;const d=b.dataset;
+  if(d.dmside){dmF.side=d.dmside;dmF.n=30;dmSave();render();return}
+  if(b.id==="dmmore"){dmF.n+=30;render();return}
+  if(d.dmsrc){sfQ=d.dmsrc;sfGroup="";location.hash="sourcefinder";return}
+  if(b.id==="dmwa"){window.open("https://wa.me/?text="+encodeURIComponent(dmShareText().slice(0,3500)),"_blank");return}
+});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.id==="dmsrc"){dmF.src=t.value;dmF.n=30;dmSave();render();return}
+  if(t.id==="dmmine"){dmF.mine=t.checked;dmSave();render();return}
+});
+document.addEventListener("input",e=>{const t=e.target;if(t.id==="dmq"){dmF.q=t.value;dmF.n=30;render()}});
+
 /* ---------- BOOT ---------- */
 render();
 setTimeout(initCloud,0);
 setTimeout(()=>loadUpdates(false),0);
-window.__GARCHA={TM,loadTM,tmOpps,get tmF(){return tmF},LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
+window.__GARCHA={dmSellRows,dmBuyRows,get dmF(){return dmF},TM,loadTM,tmOpps,get tmF(){return tmF},LEADS,loadLeads,newLeads,leadRead,EXPORT_GROUPS,IMPORT_GROUPS,DISTRICTS,get ldF(){return ldF},RULES,UPD,loadUpdates,applyRules,TERMS,PREP,decorateTerms,haveDefaults:()=>haveDefaults(),buildPlan,parseIntent,newPlanInput,finance,planText,mermaidText,planHTMLFile,get PL(){return PL},set PL(v){PL=v},S,calcExport,calcImport,calcCBM,realDue,calendar,addMonths,progress,nextSteps};
 })();
