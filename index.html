@@ -2244,7 +2244,8 @@ V.demand=function(){
     if(mw.length)rows=rows.filter(r=>mw.some(w=>(r.what+" "+r.ds.map(d=>d.prod).join(" ")).toLowerCase().includes(w)));
     const hit=r=>q&&r.what.toLowerCase().includes(q)?0:1; // when filtering, lines whose wanted item matches come first
     const col=r=>!dmC.collect?0:r.src==="gap"?0:r.tender?2:1; // trade buyers who can collect from your warehouse first, tenders (delivery needed) last
-    rows.sort((a,b)=>(hit(a)-hit(b))||(col(a)-col(b))||(a.src===b.src?0:a.src==="lead"?-1:1)||((a.when||"9")<(b.when||"9")?-1:(a.when||"9")>(b.when||"9")?1:0)||((b.val||0)-(a.val||0)));
+    const prc=new Map(rows.map(r=>[r,r.p&&dmPrices(r.p,r.c)?0:1])); // lines with a price breakdown before those without
+    rows.sort((a,b)=>(hit(a)-hit(b))||(col(a)-col(b))||(prc.get(a)-prc.get(b))||(a.src===b.src?0:a.src==="lead"?-1:1)||((a.when||"9")<(b.when||"9")?-1:(a.when||"9")>(b.when||"9")?1:0)||((b.val||0)-(a.val||0)));
     if(dmF.mine&&!mw.length)h+='<div class="card note small">“Only my products” needs your products: add them on the Dashboard profile (Product) or make a plan in the Trade Planner.</div>';
     if(!rows.length)return h+'<div class="card empty">'+((LEADS.loading||TM.loading)?"Loading demand…":"Nothing matches. Clear the filter or untick “Only my products”.")+'</div>';
     const shown=rows.slice(0,dmF.n);
