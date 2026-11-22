@@ -1,10 +1,10 @@
 {
- "checkedAt": "2026-11-22T01:35:30.250Z",
+ "checkedAt": "2026-11-22T11:58:53.149Z",
  "year": 2024,
  "products": 66,
- "refreshed": 1,
- "tried": 1,
- "calls": 10,
+ "refreshed": 0,
+ "tried": 0,
+ "calls": 2,
  "fails": 0,
  "errors": []
 }
