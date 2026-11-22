@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-21T20:12:10.474Z",
- "lastChange": "2026-11-20T08:48:20.864Z",
+ "generatedAt": "2026-11-22T08:24:17.897Z",
+ "lastChange": "2026-11-22T08:24:17.897Z",
  "items": [
   {
    "id": "rbi_press::Reserve Bank issues Foreign Exchange Management (Export and Import of Goods and Services) (Second Amendment) Regulations",
@@ -24,6 +24,24 @@
    ]
   },
   {
+   "id": "dgft_notif:50/2026-27:Amendment in Import Policy Condition of Cut Flowers under HS Code 0603 of Chapter 06 of ITC (HS), 2022, Schedule-I (Impo",
+   "src": "dgft_notif",
+   "srcName": "DGFT Notifications",
+   "kind": "Notification",
+   "official": true,
+   "num": "50/2026-27",
+   "title": "Amendment in Import Policy Condition of Cut Flowers under HS Code 0603 of Chapter 06 of ITC (HS), 2022, Schedule-I (Import Policy). -reg.",
+   "desc": "",
+   "date": "2026-11-19",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/fcccc4d1-a017-4b8a-80f4-9a026844f59e/Notification%2050_0001.pdf",
+   "firstSeen": "2026-11-22",
+   "tags": [
+    "Import policy"
+   ],
+   "important": true,
+   "rules": []
+  },
+  {
    "id": "dgft_pn:41/2026-27:Opening of one-time window for submission of applications for allocation of available quantity under TRQ Scheme for impo",
    "src": "dgft_pn",
    "srcName": "DGFT Public Notices",
@@ -33,7 +51,7 @@
    "title": "Opening of one-time window for submission of applications for allocation of available quantity under TRQ Scheme for import of raw sugar - reg.",
    "desc": "",
    "date": "2026-11-18",
-   "link": "https://content.dgft.gov.in/Website/dgftprod/bc8bf4ea-e878-47fa-964a-c669cbedf637/PN-41_0001.pdf",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/c8ccf867-ae1e-41ab-8f93-3d671115a128/PN-41_0001.pdf",
    "firstSeen": "2026-11-18",
    "tags": [
     "Import policy",
