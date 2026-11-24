@@ -1,7 +1,26 @@
 {
- "generatedAt": "2026-11-24T01:07:37.352Z",
- "lastChange": "2026-11-22T08:24:17.897Z",
+ "generatedAt": "2026-11-24T11:18:03.823Z",
+ "lastChange": "2026-11-24T11:18:03.823Z",
  "items": [
+  {
+   "id": "dgft_pn:42/2026-27:Allocation of 8606 MTRV of raw cane sugar to USA under TRQ scheme for US fiscal year 2027",
+   "src": "dgft_pn",
+   "srcName": "DGFT Public Notices",
+   "kind": "Public Notice",
+   "official": true,
+   "num": "42/2026-27",
+   "title": "Allocation of 8606 MTRV of raw cane sugar to USA under TRQ scheme for US fiscal year 2027",
+   "desc": "",
+   "date": "2026-11-23",
+   "link": "https://content.dgft.gov.in/Website/dgftprod/d4721628-51ce-4811-a6d2-27754ca6d236/Public%20Notice-42%20dt%2023-11-2026%20En.pdf",
+   "firstSeen": "2026-11-24",
+   "tags": [
+    "FTA / Origin",
+    "Agri & food"
+   ],
+   "important": true,
+   "rules": []
+  },
   {
    "id": "rbi_press::Reserve Bank issues Foreign Exchange Management (Export and Import of Goods and Services) (Second Amendment) Regulations",
    "src": "rbi_press",
