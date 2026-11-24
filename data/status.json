@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-23T09:23:09.998Z",
+ "runAt": "2026-11-24T01:07:37.352Z",
  "sources": [
   {
    "id": "dgft_notif",
@@ -43,7 +43,7 @@
    "url": "https://www.rbi.org.in/notifications_rss.xml",
    "ok": true,
    "count": 10,
-   "kept": 2,
+   "kept": 1,
    "error": ""
   },
   {
