@@ -1,11 +1,11 @@
 {
- "runAt": "2026-11-25T10:04:00.380Z",
+ "runAt": "2026-11-25T22:40:03.244Z",
  "sources": [
   {
    "id": "wb",
    "name": "World Bank tenders",
    "ok": true,
-   "count": 193,
+   "count": 194,
    "error": ""
   },
   {
@@ -25,5 +25,5 @@
  ],
  "ok": 3,
  "total": 3,
- "added": 11
+ "added": 25
 }
