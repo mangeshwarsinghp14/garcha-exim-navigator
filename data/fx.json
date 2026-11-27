@@ -1,18 +1,18 @@
 {
- "date": "Thu, 26 Nov 2026 00:02:31 +0000",
- "fetchedAt": "2026-11-27T00:00:00.256Z",
+ "date": "Fri, 27 Nov 2026 00:02:31 +0000",
+ "fetchedAt": "2026-11-27T13:25:17.543Z",
  "source": "ExchangeRate-API (open.er-api.com), market mid-rate — your bank's rate will differ a little",
  "inrPer": {
-  "USD": 92.3452,
-  "EUR": 101.2446,
-  "GBP": 120.9666,
-  "AED": 25.1451,
-  "SAR": 24.6254,
-  "JPY": 0.5801,
-  "CNY": 13.8175,
-  "AUD": 61.0235,
-  "CAD": 64.9016,
-  "SGD": 71.5361,
-  "CHF": 111.0766
+  "USD": 92.5204,
+  "EUR": 101.5243,
+  "GBP": 121.2538,
+  "AED": 25.1928,
+  "SAR": 24.6721,
+  "JPY": 0.5809,
+  "CNY": 13.8608,
+  "AUD": 61.3723,
+  "CAD": 64.9691,
+  "SGD": 71.7108,
+  "CHF": 110.8964
  }
 }
